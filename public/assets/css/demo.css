@@ -1,0 +1,1369 @@
+/*
+ * WULF (http://networks.nokia.com/)
+ * Copyright (C) 2015 Nokia Solutions and Networks. All rights Reserved.
+ */
+
+/* Frames */
+html
+{
+	height: 100%;
+	/* To get rid of horizontal scrolling */
+	width: calc(100% - 5px);
+}
+
+body
+{
+	height: 100%;
+	width: 100%;
+}
+
+iframe {
+	border: none;
+	width: 100%;
+	height: 100%;
+	background: #d8dae0;
+}
+
+/* General demo styling, to remove scrolls from topmost view */
+.demo-main-html {
+	overflow: hidden;
+}
+
+/* Body setting used for all pages, even those which are inside iframes */
+.demo-body-content, .demo-body-content-upper {
+    position: relative;
+    top: 0;
+    padding: 0 10px 10px 30px;
+    width: 100%;
+    height: 100%;
+}
+
+.demo-body-content {
+    background-image: -webkit-linear-gradient(top,#f6f6f6 0,#ebebeb 100%);
+    background-image: -o-linear-gradient(top,#f6f6f6 0,#ebebeb 100%);
+    background-image: linear-gradient(to bottom,#f6f6f6 0,#ebebeb 100%);
+    background-repeat: repeat-x;
+    height: calc(100% - 20px);
+}
+
+.demo-body-content-upper {
+    background: #d8dae0;
+}
+
+/* Main container area below the banner, where everything is displayed */
+.demo-main-content {
+	width: 100%;
+	/* Reduce height with the amount of banner size + footer */
+	height: calc(100% - 152px);
+    padding-top: 10px;
+}
+/* Correcting the background color */
+.demo-footer-background {
+	background: #d8dae0;
+}
+
+.component-header {
+    padding-bottom: 10px;
+    color: #124191;
+}
+
+hr {
+	margin-top: 0;
+}
+
+/* Containing wulf logo title and version */
+.demo-header {
+	padding: 10px 0 0 0;
+}
+
+.demo-header .n-banner-brand {
+	padding-left: 80px;
+
+	background: url("../images/wulf.png") no-repeat 0 center;
+}
+
+.demo-header .n-banner-brand > h1 {
+	margin: 0;
+	line-height: 45px;
+}
+
+/* Display demo version and date below banner */
+.demo-version {
+	margin: 0 15px 0 20px;
+	float: left;
+}
+
+.demo-version-time {
+	float: left;
+}
+
+/* How to take WULF into use for a project */
+.wulf-release-picture{
+	margin-left: 25px;
+}
+
+.wulf-release-li-nostyle {
+	list-style-type: none;
+}
+
+.wulf-icon {
+	padding: 0 15px 0 0;
+}
+
+.demo-icon-title {
+	display: inline;
+}
+
+#banner_active_demo {
+    color: white;
+    padding: 0 10px;
+    line-height: 42px;
+}
+
+#banner_dropdown_open_demo > span .icon-apps-menu:before {
+    font-size: 16px;
+    padding-right: 2px;
+    display: block;
+}
+
+/* Getting started page - side menu */
+.demo-started-menu-box {
+	position: relative;
+	width: 200px;
+	min-width: 200px;
+	margin: 10px 35px 35px 0;
+	padding: 0;
+	top: 10px;
+	left: 0;
+}
+
+.demo-started-panel {
+	min-width: 190px;
+}
+
+/* Getting started page - actual content, this is as its own iframe */
+.demo-started-content-box {
+	position: relative;
+	display: inline-block;
+	height: 100%;
+	width: calc(100% - 235px); /*83%;*/
+	min-width: 250px;
+	top: 0;
+	margin-bottom: 0;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	border: 1px solid #B2B2B2;
+	border-radius: 10px;
+	box-shadow: 0 1px 3px 0 rgba(77, 77, 77, 77), inset 0 1px 0 0 #aaa;
+}
+
+/* Example page containers: example menu tree */
+.demo-example-menu-box {
+	height: 100%;
+	width: 100%;
+	background: #d8dae0;
+}
+
+/* Tech indication text for example tree */
+#component_type_indication {
+	padding-left: 10px;
+	padding-top: 5px;
+}
+
+/* Example page containers: example content area */
+.demo-example-content-box {
+	height: 100%;
+	width: 100%;
+	background: #d8dae0;
+}
+
+/* Example page splitter */
+#demoExampleSplitterVertical {
+	height: 100% !important;
+	width: 100% !important;
+	border: 1px solid #eeeeee;
+	border-radius: 10px;
+}
+
+.demo-menu-example-panel {
+	height: calc(100% - 60px);
+}
+
+.demo-menu-example-panel .fuelux.menu-tree {
+	height: 100%;
+}
+
+.demo-container {
+	height: 100%;
+}
+
+.demo-old-about {
+	margin: 0;
+	padding: 0;
+	border: 1px solid;
+	box-shadow: 0 1px 3px #777, inset 0 0 2px #efefef;
+	width: 100%;
+	height: 130px;
+}
+
+.demo-calendar {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 100%;
+	height: 850px;
+}
+
+.demo-dropdowns {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 100%;
+	height: 850px;
+}
+
+/* Example menu area body */
+.menu-body {
+	height: 100%;
+	padding: 0 3px 0 10px;
+}
+
+/* Example menu tree */
+.menu-tree {
+	height: calc(100% - 25px);
+}
+
+/* Example menu tree legend */
+.menu-tree-legend{
+	padding: 3px 3px 3px 5px;
+	bottom: 0;
+	position: absolute;
+}
+
+.table-of-contents {
+	margin: 0 0 0 0;
+	padding: 0;
+	width: 100%;
+}
+
+.table-of-contents ul.tree {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	border: none;
+	width: 100%;
+}
+
+.table-of-contents ul.tree li {
+	padding: 0 0 0 5px;
+}
+
+.table-of-contents ul.tree li ul {
+	padding: 0 3px 0 5px;
+}
+
+/* Highlight coloring for the demo code example texts */
+.demo-highlight-color {
+	color: blue;
+}
+
+/* Panel demo */
+.dummy-picture {
+
+	height: 42px;
+	width: 42px;
+	border-radius: 5px;
+	border: 1px solid #4e4e4e;
+	background: linear-gradient(#6f6f6f, #464646);
+	box-shadow: 0 1px 3px #777, inset 0 0 2px #efefef;
+	float: left;
+	margin-top: 5px;
+	margin-right: 12px;
+}
+
+.draft {
+    color: #f00;
+	font-style: normal;
+}
+
+#ng-app wf-panels + div {
+    position: relative;
+    z-index: 10000;
+}
+
+.back-to-top {
+    font-size: 80%;
+}
+
+.flip-horizontal {
+	-moz-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	transform: scaleX(-1);
+	-ms-filter: fliph; /*IE8-10*/
+	filter: fliph; /*IE6-8*/
+}
+
+.panel-section {
+    overflow: auto;
+}
+
+.brand-color {
+	color: #0b6daf;
+}
+
+.panel .panel-heading .header-btn{
+	margin-top: -5px;
+	display: inline-block;
+}
+
+.panel button {
+	margin-top: 15px;
+	display: block;
+}
+
+/* Typography and label demo */
+#label-list li {
+	margin-bottom:15px;
+}
+
+#operations-in-demand {
+    color: #474747;
+}
+
+#label-list li .n-label {
+    padding-left: 0;
+}
+
+/* Button demo */
+.button-list > dd {
+	margin-bottom: 15px;
+}
+
+.button-list > dt {
+	padding-top: 5px;
+}
+
+#button-group-demo-container > .btn-group {
+    margin-bottom: 25px;
+}
+
+/* Slider demo */
+.slider-container {
+    margin-bottom: 25px;
+}
+
+.slider-container > p {
+    margin-top: 15px;
+}
+
+/* Inputfield demo */
+.inputfield-list > dd {
+	margin-bottom: 10px;
+}
+
+.inputfield-list > dt {
+	padding-top: 10px;
+}
+
+/* Tri-state demo*/
+li.checkbox {
+	list-style: none;
+	margin: 5px 0;
+}
+
+li.checkbox > ul > li {
+	margin: 0 0 5px 0;
+	list-style: none;
+}
+
+li.checkbox > label {
+	margin-bottom: 5px;
+}
+
+li.checkbox > ul > li > label {
+	padding-left: 18px;
+}
+
+li.checkbox > ul > li > label::before {
+	margin: 0 0 0 28px;
+}
+
+
+#drag {
+	position: absolute;
+	left: -10px;
+	top: 0;
+	bottom: 0;
+	width: 20px;
+	cursor: w-resize;
+}
+
+#drag.dragging {
+	position: fixed;
+	width: 100%;
+	background-color: transparent;
+
+}
+
+.fuelux .n-calendar .form-control {
+	padding-left: 8px;
+	width: 160px;
+}
+
+.fuelux .n-date-range .form-control {
+	width: 190px;
+}
+
+#normal-calendar-timestamp {
+	margin-top:320px;
+}
+
+.flyout-demo {
+    margin-left: -25px;
+    min-width: 250px;
+    min-height: 250px;
+}
+
+/*---------- login----------*/
+.n-login-intro {
+    position: relative;
+    top: 0;
+    left: auto;
+    margin: 0 0 30px;
+}
+
+.n-login-legal-acceptance {
+    display: none;
+}
+
+wf-login .n-login {
+    margin-top: 0;
+}
+
+wf-login .n-login-with-four-column {
+    padding-top: 0;
+}
+
+wf-login .n-login-legal-acceptance {
+    display: block;
+}
+
+/*---------- calendar----------*/
+#calendar-demo-container .dl-horizontal dd {
+    margin-left: 100px;
+}
+
+#icons-demo table {
+    width: 90%;
+}
+
+.demo-y {
+    height: 600px;
+}
+
+.content {
+    width: 340px;
+    height: 340px;
+}
+
+/*nav.nokia_banner_normal{*/
+/*min-width: 1100px;*/
+/*}*/
+
+.demo-table-min-size {
+    min-width: 1100px;
+}
+
+.demo-table-pulldown-size {
+    max-width: 140px;
+}
+
+/*--------------color box--------------*/
+.colors .color-box {
+    width: 75px;
+    height: 75px;
+    background-color: lavender;
+    border: none;
+    margin: 10px 0 10px 0;
+    padding: 0 3px 0 3px;
+}
+
+.colors .nokia-blue {
+    background-color: #124191;
+}
+
+.colors .nokia-light-blue {
+    background-color: #00C9FF;
+}
+
+.colors .nokia-dark-gray {
+    background-color: #68717A;
+}
+
+.colors .nokia-medium-gray {
+    background-color: #A8BBC0;
+}
+
+.colors .nokia-light-gray {
+    border: 1px solid #666;
+    background-color: #D8D9DA;
+}
+
+.colors .light-blue-gradient {
+    background: -webkit-linear-gradient(#00C9FF, #00A1CC);
+    background: -moz-linear-gradient(#00C9FF, #00A1CC);
+    background: linear-gradient(#00C9FF, #00A1CC);
+}
+
+.colors .dark-gray-gradient {
+    background: -webkit-linear-gradient(#68717A, #535A62);
+    background: -moz-linear-gradient(#68717A, #535A62);
+    background: linear-gradient(#68717A, #535A62);
+}
+
+.colors .medium-gray-gradient {
+    background: -webkit-linear-gradient(#A8BBC0, #86969A);
+    background: -moz-linear-gradient(#A8BBC0, #86969A);
+    background: linear-gradient(#A8BBC0, #86969A);
+}
+
+.colors .light-gray-gradient {
+    background: -webkit-linear-gradient(#D8D9DA, #ADAEAE);
+    background: -moz-linear-gradient(#D8D9DA, #ADAEAE);
+    background: linear-gradient(#D8D9DA, #ADAEAE);
+}
+
+.colors .global-gray {
+    background-color: #474747;
+}
+
+.colors .nav-gray {
+    background-color: #333;
+}
+
+.colors .dark-gray {
+    background-color: #1b1b1b;
+}
+
+.colors .medium-gray {
+    background-color: #666;
+}
+
+.colors .light-gray {
+    background-color: #aaa;
+}
+
+.colors .white {
+    border: 1px solid #666;
+    background-color: #fff;
+}
+
+.colors .black {
+    background-color: #000;
+}
+
+.colors .background-gradient {
+    background: -webkit-linear-gradient(#D8DAE0, #EFEFEF);
+    background: -moz-linear-gradient(#D8DAE0, #EFEFEF);
+    background: linear-gradient(#D8DAE0, #EFEFEF);
+    border: 1px solid #666;
+}
+
+.colors .background-insight-gradient {
+    background: -webkit-linear-gradient(#CFD0D9, #B8B8BE);
+    background: -moz-linear-gradient(#CFD0D9, #B8B8BE);
+    background: linear-gradient(#CFD0D9, #B8B8BE);
+
+}
+
+.colors .ui-underline-blue {
+    background-color: #124191;
+}
+
+.colors .ui-selection-blue {
+    background-color: #0B6DAF;
+}
+
+.colors .ui-hover-blue {
+    background-color: #00A1CC;
+}
+
+.colors .ui-light-blue {
+    background-color: #CCF4FF;
+    border: 1px solid #666;
+}
+
+.colors .alert-red {
+    background-color: #BE0006;
+}
+
+.colors .warning-yellow {
+    background-color: #FFCC00;
+}
+
+.colors .ok-green {
+    background-color: #3DAA00;
+}
+
+.colors.visualization table {
+    table-layout: fixed;
+}
+
+.colors.visualization table td {
+    width: 75px;
+    height: 50px;
+    padding-bottom: 13px;
+}
+
+.colors.visualization.palette table td {
+    width: 60px;
+    padding-bottom: 5px;
+}
+
+.colors.visualization table tr:last-child td {
+    padding-bottom: 0;
+}
+
+.colors.visualization table td .color,
+.colors.visualization table td .bar-color {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    margin: 0;
+}
+
+.colors.visualization table td .bar-color {
+    position: relative;
+}
+
+.colors.visualization table td .bar-color .left,
+.colors.visualization table td .bar-color .right {
+    width: 25px;
+    height: 100%;
+    position: absolute;
+}
+
+.colors.visualization table td .bar-color .left {
+    top: 0;
+    left: 0;
+    -webkit-border-top-left-radius: 6px;
+    -moz-border-radius-topleft: 6px;
+    border-top-left-radius: 6px;
+}
+
+.colors.visualization table td .bar-color .right {
+    top: 0;
+    right: 0;
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topright: 6px;
+    border-top-right-radius: 6px;
+}
+
+.colors.visualization table td .bar-color.one .left {
+    background-color: #0B6DAF;
+}
+
+.colors.visualization table td .bar-color.one .right {
+    background-color: #09578C;
+}
+
+.colors.visualization table td .bar-color.two .left {
+    background-color: #B3B8BC;
+}
+
+.colors.visualization table td .bar-color.two .right {
+    background-color: #868A8D;
+}
+
+.colors.visualization table td .bar-color.three .left {
+    background-color: #124191;
+}
+
+.colors.visualization table td .bar-color.three .right {
+    background-color: #0D2D65;
+}
+
+.colors.visualization table td .bar-color.four .left {
+    background-color: #00C9FF;
+}
+
+.colors.visualization table td .bar-color.four .right {
+    background-color: #00A1CC;
+}
+
+.colors.visualization table td .bar-color.five .left {
+    background-color: #474747;
+}
+
+.colors.visualization table td .bar-color.five .right {
+    background-color: #333333;
+}
+
+.colors.visualization table td .bar-color.six .left {
+    background-color: #FFCC00;
+}
+
+.colors.visualization table td .bar-color.six .right {
+    background-color: #FFB70C;
+}
+
+.colors.visualization table td .bar-color.seven .left {
+    background-color: #68717A;
+}
+
+.colors.visualization table td .bar-color.seven .right {
+    background-color: #535A62;
+}
+
+.colors.visualization table td .bar-color.eight .left {
+    background-color: #D8D9DA;
+    border-left: 1px solid #666;
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+}
+
+.colors.visualization table td .bar-color.eight .right {
+    background-color: #ADAEAE;
+    border-right: 1px solid #666;
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+}
+
+.colors.visualization table td .bar-color.nine .left {
+    background-color: #DB6D00;
+}
+
+.colors.visualization table td .bar-color.nine .right {
+    background-color: #B35900;
+}
+
+.colors.visualization table td .bar-color.ten .left {
+    background-color: #00F04D;
+}
+
+.colors.visualization table td .bar-color.ten .right {
+    background-color: #28C94C;
+}
+
+.colors.visualization table td .bar-color.eleven .left {
+    background-color: #00A1CC;
+}
+
+.colors.visualization table td .bar-color.eleven .right {
+    background-color: #0084A9;
+}
+
+.colors.visualization table td .bar-color.twelve .left {
+    background-color: #DA1914;
+}
+
+.colors.visualization table td .bar-color.twelve .right {
+    background-color: #BE0006;
+}
+
+.colors.visualization table td .color.one {
+    background-color: #0B6DAF;
+}
+
+.colors.visualization table td .color.two {
+    background-color: #B3B8BC;
+}
+
+.colors.visualization table td .color.three {
+    background-color: #124191;
+}
+
+.colors.visualization table td .color.four {
+    background-color: #00C9FF;
+}
+
+.colors.visualization table td .color.five {
+    background-color: #474747;
+}
+
+.colors.visualization table td .color.six {
+    background-color: #FFCC00;
+}
+
+.colors.visualization table td .color.seven {
+    background-color: #68717A;
+}
+
+.colors.visualization table td .color.eight {
+    background-color: #D8D9DA;
+    border: 1px solid #666;
+}
+
+.colors.visualization table td .color.nine {
+    background-color: #DB6D00;
+}
+
+.colors.visualization table td .color.ten {
+    background-color: #00F04D;
+}
+
+.colors.visualization table td .color.eleven {
+    background-color: #00A1CC;
+}
+
+.colors.visualization table td .color.twelve {
+    background-color: #DA1914;
+}
+
+.colors.visualization table td .color.gradient-one {
+    background: -webkit-linear-gradient(left, #0B6DAF, #09578C);
+    background: -moz-linear-gradient(left, #0B6DAF, #09578C);
+    background: linear-gradient(to right, #0B6DAF, #09578C);
+}
+
+.colors.visualization table td .color.gradient-two {
+    background: -webkit-linear-gradient(left, #B3B8BC, #868A8D);
+    background: -moz-linear-gradient(left, #B3B8BC, #868A8D);
+    background: linear-gradient(to right, #B3B8BC, #868A8D);
+}
+
+.colors.visualization table td .color.gradient-three {
+    background: -webkit-linear-gradient(left, #124191, #0D2D65);
+    background: -moz-linear-gradient(left, #124191, #0D2D65);
+    background: linear-gradient(to right, #124191, #0D2D65);
+}
+
+.colors.visualization table td .color.gradient-four {
+    background: -webkit-linear-gradient(left, #00C9FF, #00A1CC);
+    background: -moz-linear-gradient(left, #00C9FF, #00A1CC);
+    background: linear-gradient(to right, #00C9FF, #00A1CC);
+}
+
+.colors.visualization table td .color.gradient-five {
+    background: -webkit-linear-gradient(left, #474747, #333333);
+    background: -moz-linear-gradient(left, #474747, #333333);
+    background: linear-gradient(to right, #474747, #333333);
+}
+
+.colors.visualization table td .color.gradient-six {
+    background: -webkit-linear-gradient(left, #FFCC00, #FFB70C);
+    background: -moz-linear-gradient(left, #FFCC00, #FFB70C);
+    background: linear-gradient(to right, #FFCC00, #FFB70C);
+}
+
+.colors.visualization table td .color.gradient-seven {
+    background: -webkit-linear-gradient(left, #68717A, #535A62);
+    background: -moz-linear-gradient(left, #68717A, #535A62);
+    background: linear-gradient(to right, #68717A, #535A62);
+}
+
+.colors.visualization table td .color.gradient-eight {
+    background: -webkit-linear-gradient(left, #D8D9DA, #ADAEAE);
+    background: -moz-linear-gradient(left, #D8D9DA, #ADAEAE);
+    background: linear-gradient(to right, #D8D9DA, #ADAEAE);
+}
+
+.colors.visualization table td .color.gradient-nine {
+    background: -webkit-linear-gradient(left, #DB6D00, #B35900);
+    background: -moz-linear-gradient(left, #DB6D00, #B35900);
+    background: linear-gradient(to right, #DB6D00, #B35900);
+}
+
+.colors.visualization table td .color.gradient-ten {
+    background: -webkit-linear-gradient(left, #00F04D, #28C94C);
+    background: -moz-linear-gradient(left, #00F04D, #28C94C);
+    background: linear-gradient(to right, #00F04D, #28C94C);
+}
+
+.colors.visualization table td .color.gradient-eleven {
+    background: -webkit-linear-gradient(left, #00A1CC, #0084A9);
+    background: -moz-linear-gradient(left, #00A1CC, #0084A9);
+    background: linear-gradient(to right, #00A1CC, #0084A9);
+}
+
+.colors.visualization table td .color.gradient-twelve {
+    background: -webkit-linear-gradient(left, #DA1914, #BE0006);
+    background: -moz-linear-gradient(left, #DA1914, #BE0006);
+    background: linear-gradient(to right, #DA1914, #BE0006);
+}
+
+/*lifecycle demo style*/
+#lifecycle1 {
+    margin: 20px;
+}
+
+#wf_angular_lifecycle_demo {
+    margin: 20px;
+}
+
+.lifecycleControl {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/*Secondary Navigation Horizontal*/
+.scrollable {
+    overflow-y: scroll;
+    min-height: 900px;
+}
+
+/*Pull down demo*/
+.demo-pulldown .selectlist {
+    width: 200px;
+}
+
+.demo-pulldown .selectlist-small {
+    width: 180px;
+}
+
+/*Hidden w/o the !important to support .show()/.hide() on jquery*/
+.hide-element {
+    display: none;
+}
+
+.demo-pre-title {
+    font-size: 16px;
+    color: #1b1b1b;
+}
+
+.demo-pre-description {
+    color: #474747;
+}
+
+.demo-pre-comment {
+    padding-left: 30px;
+    color: #1b1b1b;
+}
+
+/*to solve the problem that bootstrap .close class is conflict with the one with same name in rainbow*/
+.rainbow .close {
+    float: none;
+    font-size: 13px;
+    font-weight: normal;
+    text-shadow: none;
+    opacity: 1;
+}
+
+/*for fixed nav menu for all-in-one demo page*/
+.demo-fixed-nav {
+    position: fixed;
+    top: 20px;
+    max-width: 100%;
+    max-height: 90%;
+    overflow: auto;
+}
+
+/*for fixed drilldown table*/
+.n-drilldown-table {
+    white-space: nowrap;
+}
+
+.used-pure-html-css:before {
+    content:"Pure HTML/CSS ";
+}
+
+.used-html-css:before  {
+    content:"HTML/CSS";
+}
+
+.used-html-css, .used-js, .used-jquery, .used-fuelux, .used-angular15, .used-angular2, .used-pure-html-css {
+    font-size: 12px;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-left: 2px;
+    float: right;
+}
+
+.used-mini-angular15, .used-mini-html-css, .used-mini-pure {
+    font-size: 10px;
+    color: white;
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin-left: 2px;
+    float: right;
+}
+.used-mini-angular15 {
+    background: #DA1914;
+}
+
+.used-mini-html-css {
+    background: #FFB70C;
+}
+
+.used-mini-html-css:before {
+    content: "H/C";
+}
+
+.used-mini-pure {
+    background: #FFCC00;
+}
+
+.used-mini-pure:before {
+    content: "Pure";
+}
+
+.used-mini-angular15:before {
+    content: "A15";
+}
+
+.used-pure-html-css {
+    background: #FFCC00;
+}
+.used-html-css {
+    background: #FFB70C;
+}
+.used-js:before  {
+    content:"JS";
+}
+.used-js {
+    background: #DB6D00;
+}
+.used-jquery:before  {
+    content:"jQuery";
+}
+.used-jquery {
+    background: #0B6DAF;
+}
+.used-fuelux:before {
+    content: "FuelUX";
+}
+.used-fuelux {
+    background: #FFB70C;
+}
+.used-angular15:before {
+    content: "Angular 1.5";
+}
+.used-angular2:before {
+    content: "Angular 2";
+}
+.used-angular15 {
+    background: #DA1914;
+}
+.used-angular2 {
+    background: #BE0006;
+}
+
+.nav-pills-demo {
+    position: relative;
+    top: -15px;
+}
+
+.nav-pills-demo li a {
+    padding: 5px 10px;
+}
+
+#componentTree .jqx-widget-content {
+    font-family: "Nokia Pure", Helvetica, Arial, sans-serif;
+}
+
+.in-progress {
+    color: #FFB70C;
+}
+
+.demo-status-neutral {
+    font-size: 16px;
+    padding: 0 0;
+    border-radius: 50%;
+    margin-left: 2px;
+    float: right;
+    top: -2px;
+    left: -2px;
+    position: relative;
+    color: #99720C;
+}
+
+.demo-status-neutral:before {
+    font-family: "Icons";
+    content: "\e95e";
+}
+
+.demo-color-ongoing {
+    color: rgba(1, 3, 255, 0.51);
+    font-weight: bold;
+}
+
+.demo-color-done {
+    color: #149e07;
+    font-weight: bold;
+}
+
+.demo-color-draft {
+    color: #ff6d24;
+    font-weight: bold;
+}
+
+.demo-color-pending {
+    color: #646464;
+    font-weight: bold;
+}
+
+.demo-color-proposal {
+    color: #759d39;
+    font-weight: bold;
+}
+
+.demo-color-header {
+    color: #9f9f9f;
+}
+
+.demo-status-ongoing, .demo-status-ok, .demo-status-draft, .demo-status-na, .demo-status-pending, .demo-status-proposal {
+    float: right;
+    white-space: normal;
+    font-size: 14px;
+    margin: -2px 0;
+    position: relative;
+    top: 3px;
+    right: 2px;
+}
+
+.demo-status-ongoing {
+    color: rgba(1, 3, 255, 0.51);
+}
+
+.demo-status-ongoing:before {
+    font-family: "Icons";
+    content: "\e62d";
+}
+
+.demo-status-title-ongoing {
+    color: rgba(1, 3, 255, 0.51);
+}
+
+.demo-status-ok {
+    color: #149e07;
+}
+
+.demo-status-ok:before {
+    font-family: "Icons";
+    content: "\e600";
+}
+
+.demo-status-draft {
+    color: #ff6d24;
+}
+
+.demo-status-draft:before {
+    font-family: "Icons";
+    content: "\e62e";
+}
+
+.demo-status-title-draft {
+    color: #ff6d24;
+}
+
+.demo-status-na {
+    color: #aaaaaa;
+}
+
+.demo-status-na:before {
+    content: "-";
+    margin: 4px 5px 5px 4px;
+}
+
+.demo-status-pending:before {
+    font-family: "Icons";
+    content: "\e627";
+}
+
+.demo-status-pending {
+    color: #646464;
+}
+
+.demo-status-title-pending {
+    color: #646464;
+}
+
+.demo-status-proposal {
+    color: #759d39;
+}
+
+.demo-status-title-proposal {
+    color: #759d39;
+}
+
+.demo-status-proposal:before {
+    font-family: "Icons";
+    content: "\e635";
+}
+
+#nokia-welcome-page .demo-status-na, #nokia-welcome-page .demo-status-draft,
+#nokia-welcome-page .demo-status-pending, #nokia-welcome-page .demo-status-ongoing,
+#nokia-welcome-page .demo-status-ok, #nokia-welcome-page .demo-status-proposal {
+    float: left;
+    margin: -3px 10px 0 0;
+}
+
+#nokia-welcome-page .demo-status-proposal {
+    font-size: 25px;
+    line-height: 0.7;
+    margin: -3px 5px 0 -6px;
+}
+
+#example-component-search {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.menu-component-count {
+    color: #b4b4b4;
+}
+
+#componentTree a {
+    font-weight: 400;
+}
+
+#componentTree .jqx-fill-state-pressed {
+    color: #ffffff;
+    background: #0B6DAF none;
+    border-radius: 0;
+}
+
+#componentTree {
+    border-radius: 7px;
+    border: 1px solid #B2B2B2;
+    box-shadow: 0 1px 3px 0 #cbcbcb;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    height: calc(100% - 90px) !important;
+    padding-top: 4px;
+}
+
+/* Adjust width inside tree*/
+#panelcomponentTree {
+    min-width: 100% !important;
+    max-width: 100% !important;
+}
+/* Adjust scrollbar position */
+#panelcomponentTreeverticalScrollBar {
+    right: 3px !important;
+    left: auto !important;
+}
+
+#jqxScrollThumbpanelcomponentTreeverticalScrollBar {
+    left: 4px !important;
+    width: 7px !important;
+}
+
+#componentTree .jqx-tree-item-selected {
+    border-color: #ffffff;
+}
+
+#componentTree .jqx-tree-item-hover:not(.jqx-tree-item-selected):not(.js-focus) {
+    border-color: #ffffff;
+}
+
+#componentTree .jqx-tree-item-hover:not(.jqx-tree-item-selected) {
+    background: transparent;
+}
+
+#componentTree .jqx-tree-item-hover:not(.jqx-tree-item-selected)>a {
+    border-bottom: 1px solid #124191;
+}
+
+#componentTree .js-focus {
+    border: 1px solid #000000;
+    border-radius: 0;
+}
+
+#componentTree .jqx-tree-item-hover.jqx-tree-item-selected>a {
+    border-bottom: 1px solid #ffffff;
+}
+
+#componentTree li.a-no-children {
+    margin-left: 3px !important;
+    margin-top: 0 !important;
+}
+
+#componentTree div.a-no-children:before {
+    font-family: "Icons";
+    content: "\e009";
+    font-weight: 400;
+    position: relative;
+    left: -6px;
+}
+
+.demo-container .n-footer {
+    height: 25px;
+    line-height: normal;
+}
+
+.demo-graph-total {
+    position: relative;
+    font-size: 30px;
+    color: #333333;
+    text-align: center;
+    top: -125px;
+    margin-bottom: -30px;
+}
+
+.chartContainer {
+    cursor: pointer;
+}
+
+.demo-graph-example {
+    display: none !important;
+}
+
+.demo-graph-legends {
+    display: inline-block;
+    width: 200px;
+    vertical-align: top;
+}
+
+.demo-color-box {
+    display: inline-block;
+    vertical-align: top;
+    width: 90px;
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+
+pre {
+	padding: 15px 20px 15px 20px;
+}
+
+.demo-example-layout-dialog {
+	top: -10px;
+}
+
+#SummaryDialog .modal-dialog {
+    min-width: 400px;
+}
+
+#SummaryDialog .modal-body td {
+    width: 200px;
+}
+
+.table-space-on-left-level-0 {
+    padding-left: 10px;
+}
+
+.table-space-on-left-level-1 {
+    padding-left: 20px;
+}
+
+.table-space-on-left-level-2 {
+    padding-left: 30px;
+}
+
+.table-space-on-left-level-3 {
+    padding-left: 40px;
+}
+
+.tech-select {
+    min-width: 0;
+}
+
+.demo-technology-graphs .jqx-chart-title-text {
+    font-family: "Nokia Pure", Helvetica, Arial, sans-serif;
+}
+
+.demo-example-active-dialog .n-dialog-header-fg-filler {
+	 padding-right: 0;
+	 border-top: 3px solid #00A1CC;
+ }
+
+.demo-example-active-dialog .n-dialog-header-curve .fg-corner {
+	height: 72%;
+	border-top: 3px solid #00A1CC;
+}
+.demo-modal-icon-style {
+	border-radius: 50%;
+	box-shadow: inset 0 0 0 3px #999
+}
