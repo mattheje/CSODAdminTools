@@ -66,105 +66,71 @@
                                 </div>
                             </div>
                             <button id="srchUserBtn" class="btn btn-defaultBlue btn-standard center-block" type="submit" disabled="true">Search For User</button>
-                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row col-md-12">
-        <div>
-            <table class="n-table n-table-standard n-table-striped n-table-cell-hover n-table-paging n-drilldown-table" style="min-width: 1100px;">
-                <thead>
-                <tr>
-                    <th class="text-right">ID:</th>
-                    <th>Last Name:</th>
-                    <th>First Name:</th>
-                    <th>CSL/NSN Intra:</th>
-                    <th>CSOD UserID:</th>
-                    <th>E-Mail:</th>
-                    <th>Country:</th>
-                    <th>Permissions:</th>
-                    <th>Actions:</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="text-right">1</td>
-                    <td>JENSEN</td>
-                    <td>Matthew</td>
-                    <td>6054123</td>
-                    <td>mattheje</td>
-                    <td><a href="mailto:matthew.jensen@nokia.com">matthew.jensen@nokia.com</a></td>
-                    <td>US</td>
-                    <td>8</td>
-                    <td class="n-drillDown-item" data-target-selector="#item1" NOWRAP><a href="#">Edit</a> &nbsp; <a href="#">De-Activate</a></td>
-                </tr>
-                <tr>
-                    <td colspan="9">
-                        <div>
-                            <div class="n-drillDown-collapsed" id="item1">
-                                <div class="n-drillDown-arrowContainer">
-                                    <div class="n-drillDown-arrow"></div>
-                                </div>
-                                <div class="n-drillDown-content">
-                                    <div class="n-drillDown-inner">Permission Details Here #1</div>
-                                    <span class="icon icon-close-rounded"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-right">2</td>
-                    <td>THIELIEN</td>
-                    <td>Shawn</td>
-                    <td>6053423</td>
-                    <td>sjthiele</td>
-                    <td><a href="mailto:matthew.jensen@nokia.com">sjthiele@nokia.com</a></td>
-                    <td>US</td>
-                    <td>3</td>
-                    <td class="n-drillDown-item" data-target-selector="#item2" NOWRAP><a href="#">Edit</a> &nbsp; <a href="#">Activate</a></td>
-                </tr>
-                <tr>
-                    <td colspan="9">
-                        <div>
-                            <div class="n-drillDown-collapsed" id="item2">
-                                <div class="n-drillDown-arrowContainer">
-                                    <div class="n-drillDown-arrow"></div>
-                                </div>
-                                <div class="n-drillDown-content">
-                                    <div class="n-drillDown-inner">Permission Details Here #2</div>
-                                    <span class="icon icon-close-rounded"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="9">
-                            <div class="n-table-total">
-                                <button id="TA-tableWithPaging-previousPage" class="btn btn-icon" type="button">
-                                    <span class="icon icon-back"></span>
-                                </button>
-                            </div>
-                            <div class="n-table-pagenum">
-                                Display Records 1 - 2 of 2
-                            </div>
-                            <div class="n-table-pageselect">
-                                <button id="TA-tableWithPaging-afterPage" class="btn btn-icon" type="button">
-                                    <span class="icon icon-next"></span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tfoot>
+        <div id="userAdminTableDiv"><span class="icon icon-spinner icon-spinner-large"></span></div>
+    </div>
+    {!! Form::hidden('userAction', '', array('id' => 'userAction')) !!}
+    {!! Form::hidden('userActionUserID', '', array('id' => 'userActionUserID')) !!}
+    {!! Form::close() !!}
 
-            </table>
+    <div class="modal" id="ConfirmationDialogDeactivate" role="dialog" aria-labelledby="myModalDlgLabel-confirm" aria-hidden="true" tabindex="1" style="display: none;">
+        <div class="modal-dialog n-dialog-confirm">
+            <div class="modal-content" id="TA-dialog-confirmation-content">
+                <div class="modal-header" id="TA-dialog-confirmation-content-header">
+                    <div class="n-dialog-header-fg-filler">
+                        <h1 class="modal-title">Are you sure you want to de-activate this user?</h1>
+                    </div>
+                    <div class="n-dialog-header-bg-filler"></div>
+                    <!-- -->
+                    <div class="n-dialog-header-curve">
+                        <div class="fg-mask"></div>
+                        <div class="bg-mask"></div>
+                        <div class="fg-corner"></div>
+                        <div class="bg-corner"></div>
+                    </div>
+                    <i role="button" class="icon icon-close-rounded" data-dismiss="modal" aria-label="Close" tabindex="3" id="TA-dialog-confirmation-content-close"></i>
+                    <div style="clear: both"></div>
+                    <div class="modal-title-confirm" id="TA-dialog-confirmation-content-body">The user can be re-activated from this form.</div>
+                </div>
+                <div class="modal-footer" id="TA-dialog-confirmation-content-footer">
+                    <button class="btn btn-standard" data-dismiss="modal" tabindex="4" id="TA-dialog-confirmation-buttons-delete">De-Active User</button>
+                    <button class="btn btn-standard btn-defaultBlue" data-dismiss="modal" tabindex="2" id="TA-dialog-confirmation-buttons-cancel">Cancel</button>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="modal" id="ConfirmationDialogReactivate" role="dialog" aria-labelledby="myModalDlgLabel-confirm" aria-hidden="true" tabindex="1" style="display: none;">
+        <div class="modal-dialog n-dialog-confirm">
+            <div class="modal-content" id="TA-dialog-confirmation-content">
+                <div class="modal-header" id="TA-dialog-confirmation-content-header">
+                    <div class="n-dialog-header-fg-filler">
+                        <h1 class="modal-title">Are you sure you want to re-activate this user?</h1>
+                    </div>
+                    <div class="n-dialog-header-bg-filler"></div>
+                    <!-- -->
+                    <div class="n-dialog-header-curve">
+                        <div class="fg-mask"></div>
+                        <div class="bg-mask"></div>
+                        <div class="fg-corner"></div>
+                        <div class="bg-corner"></div>
+                    </div>
+                    <i role="button" class="icon icon-close-rounded" data-dismiss="modal" aria-label="Close" tabindex="3" id="TA-dialog-confirmation-content-close"></i>
+                    <div style="clear: both"></div>
+                    <div class="modal-title-confirm" id="TA-dialog-confirmation-content-body">The user can be de-activated from this form.</div>
+                </div>
+                <div class="modal-footer" id="TA-dialog-confirmation-content-footer">
+                    <button class="btn btn-standard" data-dismiss="modal" tabindex="4" id="TA-dialog-confirmation-buttons-delete">Re-Active User</button>
+                    <button class="btn btn-standard btn-defaultBlue" data-dismiss="modal" tabindex="2" id="TA-dialog-confirmation-buttons-cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('additionalJs')
@@ -178,6 +144,168 @@
     <script type="text/javascript">
         require(['wulf/inputfield']);
         require(['wulf/drilldown']);
+
+        var lonumgenUserData={!! $usersData !!};
+        var lonumgenToolData={!! $toolsData !!};
+        var lonumgenPermissionData={!! $permissionsData !!};
+
+        var userAdminTableRowsPerPage = 10;
+
+        $(document).ready(function() {
+            buildUserAdministrationTable(0, 'userAdminTableDiv');
+        });
+
+        function buildUserAdministrationTable(offset, divid) {
+            var output = null;
+            var rowsOutput = 0;
+            var totalColumns = 11;
+            if(!(lonumgenUserData != null && lonumgenUserData.length > 0)) {
+                $('#'+divid).html('Sorry, no users found.');
+                return;
+            } //end if
+
+            offset = (offset <= 0) ? 0 : (offset >= lonumgenUserData.length) ? lonumgenUserData.length - 1 : offset;
+            output = buildUserAdminTableHeader();
+            while((rowsOutput + offset) < lonumgenUserData.length && rowsOutput < userAdminTableRowsPerPage) {
+                var user = lonumgenUserData[rowsOutput + offset];
+                var detailRow = false;
+                output += '<tr>';
+                output += '<td class="text-right">'+ user.id +'</td>';
+                output += '<td>'+ user.fname +'</td>';
+                output += '<td>'+ user.lname +'</td>';
+                output += '<td>'+ user.csod_userid +'</td>';
+                output += '<td>'+ user.username +'</td>';
+                output += '<td><a href="mailto:'+ user.email +'">'+ user.email +'</a></td>';
+                output += '<td>'+ user.country +'</td>';
+                output += '<td>'+ user.status +'</td>';
+                output += '<td>'+ user.permissions +'</td>';
+                if(user.id == undefined || user.id == null || user.id <= 0) {
+                    output += '<td colspan="2" NOWRAP><a href="#">Import User</a></td>';
+                } else if(user.id > 0 && user.status == 1) {
+                    detailRow = true;
+                    output += '<td class="n-drillDown-item" data-target-selector="#userdetailitem_'+ user.id +'" NOWRAP><a href="#">Edit</a> &nbsp;</td>';
+                    output += '<td NOWRAP><a id="TA-dialog-confirmation" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userActionUserID\').value = \''+ user.id +'\';" href="#ConfirmationDialogDeactivate" data-backdrop="false" data-toggle="modal" data-keyboard="true">De-Activate</a></td>';
+                } else {
+                    output += '<td colspan="2" NOWRAP><a id="TA-dialog-confirmation" onclick="" href="#ConfirmationDialogReactivate" data-backdrop="false" data-toggle="modal" data-keyboard="true">Re-Activate</a></td>';
+                } //end if
+
+                output += '</tr>';
+
+                if(detailRow) {
+                    output += buildUserAdminTableDetailRow(totalColumns, user.id);
+                } //end if
+
+                rowsOutput++;
+            } //end while
+
+            //Prev Link
+            var previous = false;
+            if(offset > 0) {
+                previous = true;
+            } //end if
+
+            //Next Link
+            var next = false;
+            if(lonumgenUserData.length > (userAdminTableRowsPerPage + offset)) {
+                next = true;
+            } //end if
+
+            output += buildUserAdminTableFooter(totalColumns, previous, next, lonumgenUserData.length, (offset + 1), (offset + rowsOutput));
+
+            $('#'+divid).html(output);
+        } //end buildUserAdministrationTable
+
+        function buildUserAdminTableHeader() {
+            var output = '';
+            output += '<table class="n-table n-table-standard n-table-striped n-table-cell-hover n-table-paging n-drilldown-table" style="min-width: 1100px;">';
+            output += '<thead>';
+            output += '<tr>';
+            output += '<th class="text-right">ID:</th>';
+            output += '<th>First Name:</th>';
+            output += '<th>Last Name:</th>';
+            output += '<th>CSL/NSN Intra:</th>';
+            output += '<th>CSOD UserID:</th>';
+            output += '<th>E-Mail:</th>';
+            output += '<th>Country:</th>';
+            output += '<th>Status:</th>';
+            output += '<th>Permissions:</th>';
+            output += '<th colspan=2">Actions:</th>';
+            output += '</tr>';
+            output += '</thead>';
+            output += '<tbody>';
+            return output;
+        } //end buildUserAdminTableHeader
+
+        function buildUserAdminTableDetailRow(columns, userid) {
+            var output = '';
+            output += '<tr>';
+            output += '<td colspan="'+columns+'">';
+            output += '<div>';
+            output += '<div class="n-drillDown-collapsed" id="userdetailitem_' + userid + '">';
+            output += '<div class="n-drillDown-arrowContainer">';
+            output += '<div class="n-drillDown-arrow"></div>';
+            output += '</div>';
+            output += '<div class="n-drillDown-content">';
+            output += '<div class="n-drillDown-inner">';
+            output += '<div class="form-group">';
+            output += '<label>User Permissions:</label>';
+
+            for (var i = 0; i < lonumgenToolData.length; i++) {
+                var isChecked=null;
+                if(typeof(lonumgenPermissionData[userid]) !== 'undefined') {
+                    var toolIndex = lonumgenPermissionData[userid].indexOf(String(lonumgenToolData[i].id));
+                    isChecked = (toolIndex > -1) ? 'checked' : '';
+                } //end if
+                output += '<div class="checkbox">';
+                output += '<input id="permission_' + userid + '_'+ lonumgenToolData[i].id +'" name="permission_' + userid + '_'+ lonumgenToolData[i].id +'" value="1" type="checkbox" '+ isChecked +' />';
+                output += '<label id="TA_form_Selectablevalue" for="permission_' + userid + '_'+ lonumgenToolData[i].id +'">'+ lonumgenToolData[i].name  +' '+ toolIndex +' '+ lonumgenToolData[i].id +' '+ lonumgenPermissionData[userid] +'</label>';
+                output += '</div>';
+            } //end for
+
+            output += '</div>';
+            output += '<button id="saveUserPermissionsBtn_' + userid + '" class="btn btn-defaultBlue btn-standard center-block" type="submit">Save User Permissions</button>';
+            output += '<span class="icon icon-close-rounded"></span>';
+            output += '</div>';
+            output += '</div>';
+            output += '</div>';
+            output += '</div>';
+            output += '</td>';
+            output += '</tr>';
+            return output;
+        } //end
+
+        function buildUserAdminTableFooter(columns, previous, next, total, from, to) {
+            var output = '';
+            output += '</tbody>';
+            output += '<tfoot>';
+            output += '<tr>';
+            output += '<td colspan="'+ columns +'">';
+            output += '<div class="n-table-total">';
+            output += '<button id="TA-tableWithPaging-previousPage" class="btn btn-icon" type="button">';
+            output += '<span>Total:  '+total+'</span>';
+            output += '</button>';
+            output += '</div>';
+            output += '<div class="n-table-pagenum">';
+            if(previous) {
+                output += '<button id="TA-tableWithPaging-firstPage" class="btn btn-icon" type="button">';
+                output += '<span class="icon icon-back"></span>';
+                output += '</button>';
+            } //end if
+            output += '<span>Displaying Record(s) '+from+' - '+to+'</span>';
+            if(next) {
+                output += '<button id="TA-tableWithPaging-afterPage" class="btn btn-icon" type="button">';
+                output += '<span class="icon icon-next"></span>';
+                output += '</button>';
+            } //end if
+            output += '</div>';
+            output += '<div class="n-table-pageselect"></div>';
+            output += '</td>';
+            output += '</tr>';
+            output += '</tfoot>';
+            output += '</table>';
+            return output;
+        } //end buildUserAdminTableFooter
+
 
         $('#srchUserForm input').blur(function() {
             var valid = false;
@@ -196,6 +324,8 @@
                 $('.form-control-feedback').show();
             }//end if
         });
+
+
 
     </script>
 @stop

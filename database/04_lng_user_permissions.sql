@@ -16,3 +16,6 @@ CREATE TABLE `lng_user_permissions` (
   CONSTRAINT `fk_lng_up_tool_id` FOREIGN KEY (`tool_id`) REFERENCES `lng_tools` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='User Permissions Table';
 insert into `lng_user_permissions`(`id`,`user_id`,`tool_id`,`status`,`updated_by`,`inserted_on`) values (1,1,1,1,'mattheje',NOW());
+insert into `lng_user_permissions`(`id`,`user_id`,`tool_id`,`status`,`updated_by`,`inserted_on`) values (2,1,2,1,'mattheje',NOW());
+insert into `lng_user_permissions`(`id`,`user_id`,`tool_id`,`status`,`updated_by`,`inserted_on`) values (3,1,3,1,'mattheje',NOW());
+

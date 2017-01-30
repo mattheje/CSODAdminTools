@@ -13,6 +13,7 @@
     <link href="{{ URL::to('/') }}/wulfdist/css/wulf.drilldown.min.css" rel="stylesheet"/>
     <link href="{{ URL::to('/') }}/wulfdist/css/wulf.links.min.css" rel="stylesheet"/>
     <link href="{{ URL::to('/') }}/wulfdist/css/wulf.alert.min.css" rel="stylesheet"/>
+    <link href="{{ URL::to('/') }}/wulfdist/css/wulf.dialog.min.css" rel="stylesheet"/>
     <link href="{{ URL::to('/') }}/wulfdist/css/wulf.tooltip.min.css" rel="stylesheet"/>
     <link href="{{ URL::to('/') }}/wulfdist/css/wulf.min.css" rel="stylesheet"/>
     @yield('additionalCss')

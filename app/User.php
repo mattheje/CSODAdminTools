@@ -188,15 +188,47 @@ ENDSQLTEXT;
         $srchCsl = str_replace('*', '\\%', $srchCsl);
 
         $query = DB::table('lng_users AS u')->join('lng_user_permissions AS p', 'u.id', '=', 'p.user_id')
-                                       ->select(DB::raw('u.id, u.csod_userid, u.username, u.fname, u.lname, u.email, u.country, count(p.id) as permissions'));
+                                       ->select(DB::raw('u.id, u.csod_userid, u.username, u.fname, u.lname, u.email, u.country, u.status, count(p.id) as permissions'));
         if(trim($srchName) != '') $query->where('lname', 'LIKE', '%' . $srchName . '%');
         if(trim($srchCsl) != '') $query->where('username', 'LIKE', '%' . $srchCsl . '%');
 
-        return $query->groupBy('u.id', 'u.csod_userid', 'u.username', 'u.fname', 'u.lname', 'u.email', 'u.country')
+        return $query->groupBy('u.id', 'u.csod_userid', 'u.username', 'u.fname', 'u.lname', 'u.email', 'u.country', 'u.status')
                      ->orderBy('lname', 'asc')
                      ->orderBy('id', 'desc')
                      ->get();
 
     } //end getUsersByNameOrCsl
+
+    public function getAllUsersPermissions($srchName, $srchCsl) {
+        $srchName = str_replace('%', '\\%', $srchName);
+        $srchName = str_replace('*', '\\%', $srchName);
+        $srchCsl = str_replace('%', '\\%', $srchCsl);
+        $srchCsl = str_replace('*', '\\%', $srchCsl);
+
+        /*
+        SELECT   up.user_id, GROUP_CONCAT(up.tool_id) as tool_ids
+        FROM     lng_user_permissions up
+        JOIN     lng_users u ON up.user_id=u.id
+        WHERE    u.status=1
+        AND      up.status=1
+        GROUP BY up.user_id
+        ORDER BY u.id ASC
+         */
+
+        $query = DB::table('lng_user_permissions AS up')->join('lng_users AS u', 'up.user_id', '=', 'u.id')
+                     ->select(DB::raw('up.user_id, GROUP_CONCAT(up.tool_id) as tool_ids'))->where('u.status',1)->where('up.status',1);
+        if(trim($srchName) != '') $query->where('u.lname', 'LIKE', '%' . $srchName . '%');
+        if(trim($srchCsl) != '') $query->where('u.username', 'LIKE', '%' . $srchCsl . '%');
+
+        $userPermissions = $query->groupBy('up.user_id')
+                                 ->orderBy('up.user_id', 'asc')
+                                 ->get();
+        $associativeUsersPermissions = [];
+        foreach ($userPermissions as $userPermission) {
+            $associativeUsersPermissions[$userPermission->user_id]=explode(',', $userPermission->tool_ids);
+        } //end foreach
+
+        return $associativeUsersPermissions;
+    } //end getAllUsersPermissions
 
 } //end User class

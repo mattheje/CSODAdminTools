@@ -10,4 +10,6 @@ CREATE TABLE `lng_tools` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `shortname` (`shortname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Tools Table';
-insert into `lng_tools`(`id`,`name`,`shortname`,`status`,`updated_by`,`inserted_on`) values (1,'LO Number Generator Administration','lonumadmin',1,'mattheje',NOW());
+insert into `lng_tools`(`id`,`name`,`shortname`,`status`,`updated_by`,`inserted_on`) values (1,'LO Number Generator View Only','lonumadmin',1,'mattheje',NOW());
+insert into `lng_tools`(`id`,`name`,`shortname`,`status`,`updated_by`,`inserted_on`) values (2,'LO Number Generator Create/Edit','lonunadminedit',1,'mattheje',NOW());
+insert into `lng_tools`(`id`,`name`,`shortname`,`status`,`updated_by`,`inserted_on`) values (3,'User Administration','useradmin',1,'mattheje',NOW());
