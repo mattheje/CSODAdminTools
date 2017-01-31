@@ -22,4 +22,3 @@ Route::any('login/login', ['as' => 'loginlogin', 'uses' => 'LoginController@logi
 Route::any('login/logout', ['as' => 'loginlogout', 'uses' => 'LoginController@logout']);
 
 Route::any('user', ['as' => 'userindex', 'uses' => 'UserController@index']);
-Route::any('user/searchuser', ['as' => 'searchUser', 'uses' => 'UserController@searchUser']);

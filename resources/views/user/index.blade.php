@@ -20,6 +20,11 @@
             margin: 0 0 10px;
             padding: 9px;
         }
+        .n-drilldown-table tr:nth-child(4n+2) td {
+            !important;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
     </style>
 @stop
 
@@ -67,9 +72,9 @@
                                 </div>
                             </div>
                             <button id="srchUserBtn" class="btn btn-defaultBlue btn-standard center-block" type="submit">Search For User</button>
-                            @if(trim(Request::get('msg')) !== '')
-                            <div class="alert alert-error center-block">
-                                <span class="icon icon-info"></span>{{Request::get('msg')}}
+                            @if(trim($msg) !== '')
+                            <div class="alert center-block">
+                                <span class="icon icon-info"></span>{{ $msg }}
                             </div>
                             @endif
                             @include('errors.list')

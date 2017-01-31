@@ -14,21 +14,47 @@ class UserController extends Controller
     public function index (Request $request) {
         $this->userId = LoginCheck::isLoggedIn($request);
         $srchName = trim($request->input('srchName'));
-        $srchCsl = trim($request->input('srchCsl'));;
+        $srchCsl = trim($request->input('srchCsl'));
+        $action = strtoupper(trim($request->input('userAction')));
+        $actionUserId = trim($request->input('userActionUserID'));
+        $allParams = $request->all();
+        $permissions = array();
+        foreach($allParams as $key => $value) {
+            $prefix = 'permission_' . $actionUserId . '_';
+            $pos = strpos(trim($key), $prefix);
+            if ($pos === 0 && $value == '1'){
+                $permissions[] = substr(trim($key), strlen($prefix));
+            } //end if
+        } //end foreach
+
         $userModel = new User(); //model
         $toolModel = new Tool(); //model
+        $msg = null;
+        switch($action) {
+            case 'I':
+                $status = $userModel->importUserFromLdap($actionUserId, $request->session()->get('username'));
+                if($status !== false) $msg = "User Successfully Imported From LDAP";
+                break;
+            case 'E':
+                $status = $toolModel->resetUserPermissions($actionUserId, $permissions, $request->session()->get('username'));
+                if($status !== false) $msg = "User Permissions Successfully Updated";
+                break;
+            case 'D':
+                $status = $userModel->deactivateUser($actionUserId, $request->session()->get('username'));
+                if($status !== false) $msg = "User Successfully De-Activated";
+                break;
+            case 'R':
+                $status = $userModel->reactivateUser($actionUserId, $request->session()->get('username'));
+                if($status !== false) $msg = "User Successfully Re-Activated";
+                break;
+        } //end switch
+
         $usersData = json_encode($userModel->getUsersByNameOrCsl($srchName, $srchCsl));
         $toolsData = json_encode($toolModel->getAllTools());
         $permissionsData = json_encode($userModel->getAllUsersPermissions($srchName, $srchCsl));
 
-        return view('user.index', compact('usersData', 'toolsData', 'permissionsData', 'srchName', 'srchCsl'));
+        return view('user.index', compact('usersData', 'toolsData', 'permissionsData', 'srchName', 'srchCsl', 'msg'));
 
     } //end index
-
-    public function searchUser(Request $request) {
-        $this->userId = LoginCheck::isLoggedIn($request);
-
-        echo "Search user permissions results";
-    } //end searchUser
 
 } //end UserController class

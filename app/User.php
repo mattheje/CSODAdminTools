@@ -187,7 +187,7 @@ ENDSQLTEXT;
         $srchCsl = str_replace('%', '\\%', $srchCsl);
         $srchCsl = str_replace('*', '\\%', $srchCsl);
 
-        $query = DB::table('lng_users AS u')->join('lng_user_permissions AS p', 'u.id', '=', 'p.user_id')
+        $query = DB::table('lng_users AS u')->leftJoin('lng_user_permissions AS p', 'u.id', '=', 'p.user_id')
                                        ->select(DB::raw('u.id, u.csod_userid, u.username, u.fname, u.lname, u.email, u.country, u.status, count(p.id) as permissions'));
         if(trim($srchName) != '') $query->where('lname', 'LIKE', '%' . $srchName . '%');
         if(trim($srchCsl) != '') $query->where('username', 'LIKE', '%' . $srchCsl . '%');
@@ -210,6 +210,7 @@ ENDSQLTEXT;
         FROM     lng_user_permissions up
         JOIN     lng_users u ON up.user_id=u.id
         WHERE    u.status=1
+        ...
         AND      up.status=1
         GROUP BY up.user_id
         ORDER BY u.id ASC
@@ -230,5 +231,17 @@ ENDSQLTEXT;
 
         return $associativeUsersPermissions;
     } //end getAllUsersPermissions
+
+    public function importUserFromLdap($userId, $updatedBy) {
+
+    } //end importUserFromLdap
+
+    public function deactivateUser($userId, $updatedBy) {
+        return ($userId > 0) ? DB::table('lng_users')->where('id', $userId)->update(['status' => 0, 'updated_by' => $updatedBy]) : false;
+    } //end deactivateUser
+
+    public function reactivateUser($userId, $updatedBy) {
+        return ($userId > 0) ? DB::table('lng_users')->where('id', $userId)->update(['status' => 1, 'updated_by' => $updatedBy]) : false;
+    } //end reactivateUser
 
 } //end User class
