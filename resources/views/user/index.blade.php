@@ -20,7 +20,13 @@
             margin: 0 0 10px;
             padding: 9px;
         }
-        .n-drilldown-table tr:nth-child(4n+2) td {
+        .n-drilldown-table tr:nth-child(4n+2) td { /* Fix error in WULF CSS */
+            !important;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        .n-drilldown-table tr:nth-child(4n) td {
+            /* Fix error in WULF CSS */
             !important;
             padding-left: 8px;
             padding-right: 8px;
@@ -42,7 +48,7 @@
         <div class="col-md-3 col-md-push-9">
             <div class="panel-shadow-description" style="max-width: 400px;">
                 Instructions:
-                <div class="instructionblock">Please search for a user to import, edit, or disable.<br />(Note:  User data is supplied via LDAP, and basic user information can not be updated in this system, but must be updated in the corporate HR systems that feed LDAP.)</div>
+                <div class="instructionblock">Please search for a user to import, edit, or disable.<br/>New user information is suplied from LDAP and these search results always appear on top of the existing users results.<br />(Note:  User data is supplied via LDAP, and the basic user information can not be updated in this system.  It must be updated in the corporate HR systems that feed LDAP.)</div>
             </div>
         </div>
         <div class="col-md-9 col-md-pull-3" style="padding-left: 0px;">
@@ -185,14 +191,14 @@
                 output += '<td class="text-right">'+ user.id +'</td>';
                 output += '<td>'+ user.fname +'</td>';
                 output += '<td>'+ user.lname +'</td>';
-                output += '<td>'+ user.csod_userid +'</td>';
                 output += '<td>'+ user.username +'</td>';
+                output += '<td>'+ user.csod_userid +'</td>';
                 output += '<td><a href="mailto:'+ user.email +'">'+ user.email +'</a></td>';
                 output += '<td>'+ user.country +'</td>';
                 output += '<td>'+ user.status +'</td>';
                 output += '<td>'+ user.permissions +'</td>';
                 if(user.id == undefined || user.id == null || user.id <= 0) {
-                    output += '<td colspan="2" NOWRAP><a href="javascript:void(0);" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.username +'\';document.getElementById(\'userAction\').value = \'I\';">Import User</a></td>';
+                    output += '<td colspan="2" NOWRAP><a href="javascript:void(0);" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.username +'\';document.getElementById(\'userAction\').value=\'I\';document.forms[0].submit();">Import User</a></td>';
                 } else if(user.id > 0 && user.status == 1) {
                     detailRow = true;
                     output += '<td class="n-drillDown-item" data-target-selector="#userdetailitem_'+ user.id +'" NOWRAP><a href="javascript:void(0);" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userAction\').value = \'E\';">Edit</a> &nbsp;</td>';

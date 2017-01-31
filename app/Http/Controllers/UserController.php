@@ -22,9 +22,7 @@ class UserController extends Controller
         foreach($allParams as $key => $value) {
             $prefix = 'permission_' . $actionUserId . '_';
             $pos = strpos(trim($key), $prefix);
-            if ($pos === 0 && $value == '1'){
-                $permissions[] = substr(trim($key), strlen($prefix));
-            } //end if
+            if ($pos === 0 && $value == '1') $permissions[] = substr(trim($key), strlen($prefix));
         } //end foreach
 
         $userModel = new User(); //model
@@ -49,7 +47,9 @@ class UserController extends Controller
                 break;
         } //end switch
 
-        $usersData = json_encode($userModel->getUsersByNameOrCsl($srchName, $srchCsl));
+        $usersData = $userModel->getUsersByNameOrCsl($srchName, $srchCsl);
+        $ldapData = $userModel->searchFAluLdapForUser($srchName, $srchCsl, $usersData);
+        $usersData = json_encode(array_merge($ldapData,$usersData));
         $toolsData = json_encode($toolModel->getAllTools());
         $permissionsData = json_encode($userModel->getAllUsersPermissions($srchName, $srchCsl));
 
