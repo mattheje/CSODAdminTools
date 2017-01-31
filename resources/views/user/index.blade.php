@@ -24,6 +24,7 @@
 @stop
 
 @section('content')
+    {!! Form::open(['action' => 'UserController@index', 'method' => 'post', 'id'=>'srchUserForm', 'class' => 'form-horizontal']) !!}
     <div class="row col-md-12">
         <div class="panel panel-blue-cap" style="max-width: 300px;">
             <div class="panel-heading" style="padding-top: 4px; padding-bottom: 1px; padding-left: 2px; padding-right: 2px; background-image: linear-gradient(to bottom, #fff 0px, #e5e5e5 100%);  min-height: 30px; max-height: 30px;">
@@ -39,14 +40,14 @@
                 <div class="instructionblock">Please search for a user to import, edit, or disable.<br />(Note:  User data is supplied via LDAP, and basic user information can not be updated in this system, but must be updated in the corporate HR systems that feed LDAP.)</div>
             </div>
         </div>
-        <div class="col-md-9 col-md-pull-3">
+        <div class="col-md-9 col-md-pull-3" style="padding-left: 0px;">
             <div class="panel panel-shadow" style="max-width: 800px">
                 <div class="panel-heading">
                     <strong>User Search</strong>
                 </div>
                 <div class="panel-body">
                     <div class="col-md-12 text-center panel-section">
-                        {!! Form::open(['action' => 'UserController@index', 'method' => 'post', 'id'=>'srchUserForm', 'class' => 'form-horizontal']) !!}
+
                             <div class="form-group has-feedback">
                                 <div class="col-md-12">
                                     <label class="col-md-4 control-label-sm" style="white-space: nowrap;">Last Name:</label>
@@ -65,7 +66,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <button id="srchUserBtn" class="btn btn-defaultBlue btn-standard center-block" type="submit" disabled="true">Search For User</button>
+                            <button id="srchUserBtn" class="btn btn-defaultBlue btn-standard center-block" type="submit">Search For User</button>
+                            @if(trim(Request::get('msg')) !== '')
+                            <div class="alert alert-error center-block">
+                                <span class="icon icon-info"></span>{{Request::get('msg')}}
+                            </div>
+                            @endif
+                            @include('errors.list')
                     </div>
                 </div>
             </div>
@@ -98,7 +105,7 @@
                     <div class="modal-title-confirm" id="TA-dialog-confirmation-content-body">The user can be re-activated from this form.</div>
                 </div>
                 <div class="modal-footer" id="TA-dialog-confirmation-content-footer">
-                    <button class="btn btn-standard" data-dismiss="modal" tabindex="4" id="TA-dialog-confirmation-buttons-delete">De-Active User</button>
+                    <button class="btn btn-standard" data-dismiss="modal" tabindex="4" type="submit" id="TA-dialog-confirmation-buttons-delete" onclick="document.forms[0].submit();">De-Activate User</button>
                     <button class="btn btn-standard btn-defaultBlue" data-dismiss="modal" tabindex="2" id="TA-dialog-confirmation-buttons-cancel">Cancel</button>
                 </div>
             </div>
@@ -124,7 +131,7 @@
                     <div class="modal-title-confirm" id="TA-dialog-confirmation-content-body">The user can be de-activated from this form.</div>
                 </div>
                 <div class="modal-footer" id="TA-dialog-confirmation-content-footer">
-                    <button class="btn btn-standard" data-dismiss="modal" tabindex="4" id="TA-dialog-confirmation-buttons-delete">Re-Active User</button>
+                    <button class="btn btn-standard" data-dismiss="modal" tabindex="4" type="submit" id="TA-dialog-confirmation-buttons-delete" onclick="document.forms[0].submit();">Re-Active User</button>
                     <button class="btn btn-standard btn-defaultBlue" data-dismiss="modal" tabindex="2" id="TA-dialog-confirmation-buttons-cancel">Cancel</button>
                 </div>
             </div>
@@ -180,13 +187,13 @@
                 output += '<td>'+ user.status +'</td>';
                 output += '<td>'+ user.permissions +'</td>';
                 if(user.id == undefined || user.id == null || user.id <= 0) {
-                    output += '<td colspan="2" NOWRAP><a href="#">Import User</a></td>';
+                    output += '<td colspan="2" NOWRAP><a href="javascript:void(0);" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.username +'\';document.getElementById(\'userAction\').value = \'I\';">Import User</a></td>';
                 } else if(user.id > 0 && user.status == 1) {
                     detailRow = true;
-                    output += '<td class="n-drillDown-item" data-target-selector="#userdetailitem_'+ user.id +'" NOWRAP><a href="#">Edit</a> &nbsp;</td>';
-                    output += '<td NOWRAP><a id="TA-dialog-confirmation" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userActionUserID\').value = \''+ user.id +'\';" href="#ConfirmationDialogDeactivate" data-backdrop="false" data-toggle="modal" data-keyboard="true">De-Activate</a></td>';
+                    output += '<td class="n-drillDown-item" data-target-selector="#userdetailitem_'+ user.id +'" NOWRAP><a href="javascript:void(0);" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userAction\').value = \'E\';">Edit</a> &nbsp;</td>';
+                    output += '<td NOWRAP><a id="TA-dialog-confirmation" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userAction\').value = \'D\';" href="#ConfirmationDialogDeactivate" data-backdrop="false" data-toggle="modal" data-keyboard="true">De-Activate</a></td>';
                 } else {
-                    output += '<td colspan="2" NOWRAP><a id="TA-dialog-confirmation" onclick="" href="#ConfirmationDialogReactivate" data-backdrop="false" data-toggle="modal" data-keyboard="true">Re-Activate</a></td>';
+                    output += '<td colspan="2" NOWRAP><a id="TA-dialog-confirmation" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userAction\').value = \'R\';" href="#ConfirmationDialogReactivate" data-backdrop="false" data-toggle="modal" data-keyboard="true">Re-Activate</a></td>';
                 } //end if
 
                 output += '</tr>';
@@ -210,7 +217,7 @@
                 next = true;
             } //end if
 
-            output += buildUserAdminTableFooter(totalColumns, previous, next, lonumgenUserData.length, (offset + 1), (offset + rowsOutput));
+            output += buildUserAdminTableFooter(divid, 'buildUserAdministrationTable', offset, rowsOutput, totalColumns, userAdminTableRowsPerPage, previous, next, lonumgenUserData.length, (offset + 1), (offset + rowsOutput));
 
             $('#'+divid).html(output);
         } //end buildUserAdministrationTable
@@ -258,7 +265,7 @@
                 } //end if
                 output += '<div class="checkbox">';
                 output += '<input id="permission_' + userid + '_'+ lonumgenToolData[i].id +'" name="permission_' + userid + '_'+ lonumgenToolData[i].id +'" value="1" type="checkbox" '+ isChecked +' />';
-                output += '<label id="TA_form_Selectablevalue" for="permission_' + userid + '_'+ lonumgenToolData[i].id +'">'+ lonumgenToolData[i].name  +' '+ toolIndex +' '+ lonumgenToolData[i].id +' '+ lonumgenPermissionData[userid] +'</label>';
+                output += '<label id="TA_form_Selectablevalue" for="permission_' + userid + '_'+ lonumgenToolData[i].id +'">'+ lonumgenToolData[i].name +'</label>';
                 output += '</div>';
             } //end for
 
@@ -274,7 +281,7 @@
             return output;
         } //end
 
-        function buildUserAdminTableFooter(columns, previous, next, total, from, to) {
+        function buildUserAdminTableFooter(divid, funcname, offset, rowsOutput, columns, pagesize, previous, next, total, from, to) {
             var output = '';
             output += '</tbody>';
             output += '<tfoot>';
@@ -287,13 +294,15 @@
             output += '</div>';
             output += '<div class="n-table-pagenum">';
             if(previous) {
-                output += '<button id="TA-tableWithPaging-firstPage" class="btn btn-icon" type="button">';
+                var prevoffset = ((offset - pagesize) <= 0) ? 0 : (offset - pagesize);
+                output += '<button id="TA-tableWithPaging-firstPage" class="btn btn-icon" type="button" onclick="'+funcname+'('+prevoffset+', \''+divid+'\');">';
                 output += '<span class="icon icon-back"></span>';
                 output += '</button>';
             } //end if
             output += '<span>Displaying Record(s) '+from+' - '+to+'</span>';
             if(next) {
-                output += '<button id="TA-tableWithPaging-afterPage" class="btn btn-icon" type="button">';
+                var nextoffset = (rowsOutput + offset);
+                output += '<button id="TA-tableWithPaging-afterPage" class="btn btn-icon" type="button" onclick="'+funcname+'('+nextoffset+', \''+divid+'\');">';
                 output += '<span class="icon icon-next"></span>';
                 output += '</button>';
             } //end if
@@ -320,13 +329,14 @@
                 $('#srchUserBtn').removeAttr('disabled');
                 $('.form-control-feedback').hide();
             } else {
-                $('#srchUserBtn').attr('disabled', 'disabled');
+                //$('#srchUserBtn').attr('disabled', 'disabled');
                 $('.form-control-feedback').show();
             }//end if
         });
 
-
-
+        //$('#TA-dialog-confirmation-buttons-delete').click(function() {
+        //    document.forms[0].submit();
+        //});
     </script>
 @stop
 
