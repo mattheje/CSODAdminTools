@@ -26,7 +26,7 @@
     $(document).ready(function () {
         'use strict';
         var $content = $('#content');
-        var panels = [{size: 250, collapsible: false}, {collapsible: false}];
+        var panels = [{size: 260, collapsible: false}, {collapsible: false}];
         $('#demoExampleSplitterVertical').jqxSplitter({orientation: "vertical", width: "100%", height: "100%", panels: panels});
         $(window).resize(function () {
             $('#demoExampleSplitterVertical').jqxSplitter('refresh');

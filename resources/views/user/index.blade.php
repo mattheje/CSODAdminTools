@@ -39,7 +39,7 @@
     <div class="row col-md-12">
         <div class="panel panel-blue-cap" style="max-width: 300px;">
             <div class="panel-heading" style="padding-top: 4px; padding-bottom: 1px; padding-left: 2px; padding-right: 2px; background-image: linear-gradient(to bottom, #fff 0px, #e5e5e5 100%);  min-height: 30px; max-height: 30px;">
-                <h1><span class='icon icon-profile'></span> User Administration :</h1>
+                <h1><span class='icon icon-profile'></span> User/Tool Administration :</h1>
             </div>
         </div>
         <hr style="width: 100%; margin-top: -21px; margin-bottom: 5px;" />

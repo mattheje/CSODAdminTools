@@ -62,13 +62,38 @@
     $(document).ready(
             function () { //
                 var childNodesArray = [
+                    @if(in_array('lonumadmin',Session::get('userpermissions')) || in_array('lonumadminedit',Session::get('userpermissions')) )
                     { "name": "<span class='icon icon-list'></span> LO Number Generator", "type": "folder", "attr":{"parentNode" : "rootNode", "src" :"", "id":"<span class='icon icon-list'></span> LO Number Generator"}},
                     { "name": "<span class='icon icon-dashboard'></span> Dashboard", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src" :"{{ URL::action('IndexController@content', []) }}"}},
+                    @if(in_array('lonumadminedit',Session::get('userpermissions')))
                     { "name": "<span class='icon icon-add'></span> Create New LO Number", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('IndexController@content', []) }}"}},
                     { "name": "<span class='icon icon-edit'></span> Manage My LO Numbers", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('IndexController@content', []) }}"}},
-                    { "name": "<span class='icon icon-profile'></span> User Administration", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src" :"{{ URL::action('UserController@index', []) }}"}},
-                    { "name": "<span class='icon icon-actions-menu'></span> CSOD", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src" :"javascript:window.open('https://alcatel-lucent.csod.com/','_blank');"}},
-                    { "name": "<span class='icon icon-actions-menu'></span> Log Out", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src" :"javascript:top.window.location.href='{{ URL::action('LoginController@logout', []) }}';"}}
+                    { "name": "<span class='icon icon-edit'></span> Manage Others LO Numbers", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('IndexController@content', []) }}"}},
+                    @endif
+                    @endif
+
+                    @if(in_array('csoddeeplink',Session::get('userpermissions')) || in_array('scormautocompbuilder',Session::get('userpermissions')) || in_array('scormnocompbuilder',Session::get('userpermissions')) )
+                    { "name": "<span class='icon icon-list'></span> CSOD Content Tools", "type": "folder", "attr":{"parentNode" : "rootNode", "src" :"", "id":"<span class='icon icon-list'></span> CSOD Content Tools"}},
+                    @if(in_array('csoddeeplink',Session::get('userpermissions')))
+                    { "name": "<span class='icon icon-dropdown-menu'></span> CSOD Deeplink Generator", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> CSOD Content Tools", "src" :"{{ URL::action('IndexController@content', []) }}"}},
+                    @endif
+                    @if(in_array('scormautocompbuilder',Session::get('userpermissions')))
+                    { "name": "<span class='icon icon-license-info'></span> SCORM Auto-Complete Builder", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> CSOD Content Tools", "src" :"{{ URL::action('IndexController@content', []) }}"}},
+                    @endif
+                    @if(in_array('scormnocompbuilder',Session::get('userpermissions')))
+                    { "name": "<span class='icon icon-indicator'></span> SCORM No-Complete Builder", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> CSOD Content Tools", "src" :"{{ URL::action('IndexController@content', []) }}"}},
+                    @endif
+                    @endif
+
+                    @if(in_array('useradmin',Session::get('userpermissions')))
+                    { "name": "<span class='icon icon-list'></span> Administration", "type": "folder", "attr":{"parentNode" : "rootNode", "src" :"", "id":"<span class='icon icon-list'></span> Administration"}},
+                    @if(in_array('useradmin',Session::get('userpermissions')))
+                    { "name": "<span class='icon icon-profile'></span> User and Tool Permissions", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> Administration", "src" :"{{ URL::action('UserController@index', []) }}"}},
+                    @endif
+                    @endif
+
+                    { "name": "<span class='icon icon-goto'></span> CSOD", "type": "item", "attr":{"parentNode" : "rootNode", "src" :"javascript:window.open('https://alcatel-lucent.csod.com/','_newCsod');void(0);"}},
+                    { "name": "<span class='icon icon-actions-menu'></span> Log Out", "type": "item", "attr":{"parentNode" : "rootNode", "src" :"javascript:top.window.location.href='{{ URL::action('LoginController@logout', []) }}';"}}
                 ];
 
                 function staticDataSource(openedParentData, callback) {

@@ -328,4 +328,22 @@ ENDSQLTEXT;
         return ($userId > 0) ? DB::table('lng_users')->where('id', $userId)->update(['status' => 1, 'updated_by' => $updatedBy]) : false;
     } //end reactivateUser
 
+    public function getPermissions($userId) {
+        if (!($userId > 0)) return [];
+        $data = DB::table('lng_user_permissions AS up')
+                    ->join('lng_users AS u', 'up.user_id', '=', 'u.id')
+                    ->join('lng_tools AS t', 'up.tool_id', '=', 't.id')
+                    ->select('t.shortname')
+                    ->where('up.status',1)
+                    ->where('u.status',1)
+                    ->where('t.status',1)
+                    ->orderBy('t.shortname', 'asc')
+                    ->distinct()->get();
+        $returnAry = [];
+        foreach($data as $item) {
+            $returnAry[]=trim($item->shortname);
+        } //end foreach
+        return $returnAry;
+    } //end getPermissions
+
 } //end User class

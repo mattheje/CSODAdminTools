@@ -31,10 +31,12 @@ class LoginController extends Controller
                 $response->send();
                 exit;
             } //end if
+            $permissions = $userModel->getPermissions($userId);
             $request->session()->put('userId', $userId);
             $request->session()->put('username', $username);
             $request->session()->put('fullname', $userData->fname . ' '. $userData->lname);
             $request->session()->put('useremail', $userData->email);
+            $request->session()->put('userpermissions', $permissions);
             $response = redirect()->route('index', ['msg' => 'Welcome ' . $userData->fname . '!'])
                                   ->withCookie(cookie('lng_username', $username, 1051200)); //2 Years (in minutes)
             $request->session()->save();
