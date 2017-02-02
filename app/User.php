@@ -61,7 +61,7 @@ class User extends Model
                     $this->userData['updated_by'] = 'login';
                     $userId = $this->addOrUpdateUser();
                     $this->userId = $userId;
-                    $this->setUserPermission($userId, 'lonumadmin');
+                    $this->setUserPermission($userId, 'lonumadmin', 'login');
                 } //end if
                 break;
             default: // more than 1 match -> ambiguous
@@ -111,7 +111,7 @@ class User extends Model
                     $this->userData['updated_by'] = 'login';
                     $userId = $this->addOrUpdateUser();
                     $this->userId = $userId;
-                    $this->setUserPermission($userId, 'lonumadmin');  //Grant Lo Number Generator Tool Permission By Default Upon First Login
+                    $this->setUserPermission($userId, 'lonumadmin', 'login');  //Grant Lo Number Generator Tool Permission By Default Upon First Login
                 } //end if
                 break;
             default: // more than 1 match -> ambiguous
@@ -154,7 +154,7 @@ ENDSQLTEXT;
     } //end addOrUpdateUser
 
 
-    public function setUserPermission($userId, $permissionShortName) {
+    public function setUserPermission($userId, $permissionShortName, $updatedBy) {
         if(!($userId > 0 && trim($permissionShortName) != '')) return false;
         $sqltxt = <<<ENDSQLTEXT
         INSERT INTO `lng_user_permissions`
@@ -162,14 +162,15 @@ ENDSQLTEXT;
          `updated_by`, `inserted_on`)
         VALUES
         (:user_id, (SELECT `id` FROM `lng_tools` WHERE `shortname`=:shortname ORDER BY `id` DESC LIMIT 1),
-         'login', :inserted_on)
+         :updated_by, :inserted_on)
         ON DUPLICATE KEY
         UPDATE `id`=LAST_INSERT_ID(`id`),
                `updated_by`='login'
 ENDSQLTEXT;
         $pdo = DB::connection()->getPdo();
         $stmt = $pdo->prepare($sqltxt);
-        $stmt->execute(['user_id' => $userId, 'shortname' => $permissionShortName, 'inserted_on' => date('Y-m-d H:i:s')]);
+        $stmt->execute(['user_id' => $userId, 'shortname' => $permissionShortName,
+                        'updated_by' => $updatedBy, 'inserted_on' => date('Y-m-d H:i:s')]);
         $permissionId = $pdo->lastInsertId();
         return $permissionId;
     } //end setUserPermission
@@ -296,7 +297,7 @@ ENDSQLTEXT;
             case 1:
                 $result = ldap_get_entries($ldap, $results);
                 $dn_user = isset($result[0]["dn"]) ? $result[0]["dn"] : null;
-                if(is_null($dn_user)) { return false; break; }
+                if(is_null($dn_user) || !isset($result[0]['nokiaid'][0])) { return false; break; }
                 $this->userData['country'] = isset($result[0]['country'][0]) ? trim($result[0]['country'][0]) : null; //set this here since the other LDAP method does not have this attribute
                 $this->userData['csod_userid'] = trim($result[0]['nokiaid'][0]);
                 $this->userData['username'] = $userId;
@@ -310,14 +311,14 @@ ENDSQLTEXT;
                 $this->userData['updated_by'] = $updatedBy;
                 $userId = $this->addOrUpdateUser();
                 $this->userId = $userId;
-                $this->setUserPermission($userId, 'lonumadmin');
+                $this->setUserPermission($userId, 'lonumadmin', $updatedBy);
                 break;
             default: // more than 1 match -> ambiguous
                 return false;
                 break;
         } //end switch
         @ldap_unbind($ldap);
-        return true;
+        return $this->userId;
     } //end importUserFromLdap
 
     public function deactivateUser($userId, $updatedBy) {
@@ -345,5 +346,10 @@ ENDSQLTEXT;
         } //end foreach
         return $returnAry;
     } //end getPermissions
+
+    public function migrateUser() {
+
+    } //end migrateUsers
+
 
 } //end User class
