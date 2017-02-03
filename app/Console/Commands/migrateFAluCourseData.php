@@ -2679,14 +2679,13 @@ ENDALUCNGCOURSEDATA;
         $coursesData = explode("\n", $fAluCourseData);
         $headers = str_getcsv(array_shift($coursesData), "\t");
         $i=0;
-        DB::statement("SET NAMES 'utf8'");
-        DB::statement("SET CHARACTER SET utf8");
         foreach($coursesData as $courseData) {
             $lonumModel = new LoNumber();
-            $courseData = array_combine($headers, str_getcsv($courseData, "\t"));
+            $courseData = array_combine($headers, array_map('utf8_encode',str_getcsv($courseData, "\t")));
             $owner_id = DB::table('lng_users')->where('username', $courseData['owner_csl'])->value('id');
             $courseData['owner_id'] = ($owner_id > 0) ? $owner_id : 1; //default to me if user not found/migrated
             unset($courseData['owner_csl']);
+            foreach ($courseData as $key => $value) { $courseData[$key] = empty($value) ? NULL : $value; } //Clean Up NULLS
             $id = $lonumModel->insertLoNumber($courseData);
             if($id > 0) $i++;
         } //end foreach
