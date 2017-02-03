@@ -2674,8 +2674,8 @@ jdiaz1	3284	5	N	P	W	1	TBU00265W_V1.0	TBU00265W	1.0	TBU00265W_V1.0: Health and Sa
 ENDALUCNGCOURSEDATA;
 
 
-        $coursesData = explode(PHP_EOL, $fAluCourseData);
-        $headers = array_shift($coursesData);
+        $coursesData = explode("\n", $fAluCourseData);
+        $headers = str_getcsv(array_shift($coursesData), "\t");
         $i=0;
         foreach($coursesData as $courseData) {
             $lonumModel = new LoNumber();

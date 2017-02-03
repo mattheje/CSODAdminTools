@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class LoNumber extends Model
 {
     public function insertLoNumber($courseData) {
-        return DB::table('lo_numgen')->insertGetId($courseData);
+        return DB::table('lng_lonum')->insertGetId($courseData);
     } //end insertLoNumber
 
 } //end class

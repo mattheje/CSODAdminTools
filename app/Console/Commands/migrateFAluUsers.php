@@ -87,7 +87,7 @@ aprat
 ENDUFALUUSERDATA;
 
 
-        $users = explode(PHP_EOL, $fAluUserData);
+        $users = explode("\n", $fAluUserData);
         $i=0;
         foreach ($users as $user) {
             $user = strtolower(trim($user));
