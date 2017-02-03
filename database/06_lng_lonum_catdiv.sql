@@ -14,7 +14,7 @@ CREATE TABLE `lng_lonum_catdiv` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `xs_unq_lng_catdiv_code` (`code`),
   KEY `division_name` (`division_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT 'Category Divisions Table';
 
 insert into `lng_lonum_catdiv`(`id`,`code`,`division_name`,`pl_name`,`start_number`,`custom1`,`custom2`,`custom3`,`inserted_on`) values (1,'BU','Business','Business',1,null,null,null,'2016-01-11 10:10:34');
 insert into `lng_lonum_catdiv`(`id`,`code`,`division_name`,`pl_name`,`start_number`,`custom1`,`custom2`,`custom3`,`inserted_on`) values (2,'GK','General Knowledge','General Knowledge',1,null,null,null,'2016-01-11 10:10:34');

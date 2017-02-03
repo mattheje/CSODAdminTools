@@ -39,7 +39,7 @@ class migrateFAluUsers extends Command
      */
     public function handle()
     {
-        /* Paste the data from this MyPLE query below:
+        /* Paste the data from this MyPLE query below, *** no headers, just CSL values ***:
 
         SELECT DISTINCT cad.csl
         FROM alu_ple_lms_course_gen cg
@@ -87,7 +87,7 @@ aprat
 ENDUFALUUSERDATA;
 
 
-        $users = explode("\n", $fAluUserData);
+        $users = explode(PHP_EOL, $fAluUserData);
         $i=0;
         foreach ($users as $user) {
             $user = strtolower(trim($user));
