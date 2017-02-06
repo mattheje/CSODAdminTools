@@ -45,13 +45,13 @@
         <hr style="width: 100%; margin-top: -21px; margin-bottom: 5px;" />
     </div>
     <div class="row col-md-12">
-        <div class="col-md-3 col-md-push-9">
+        <div class="col-md-3 col-md-push-9" style="padding-left: 1px;">
             <div class="panel-shadow-description" style="max-width: 400px;">
                 Instructions:
                 <div class="instructionblock">Please search for a user to import, edit, or disable.<br/>New user information is suplied from LDAP and these search results always appear on top of the existing users results.<br />(Note:  User data is supplied via LDAP, and the basic user information can not be updated in this system.  It must be updated in the corporate HR systems that feed LDAP.)</div>
             </div>
         </div>
-        <div class="col-md-9 col-md-pull-3" style="padding-left: 0px;">
+        <div class="col-md-9 col-md-pull-3" style="padding-left: 1px;">
             <div class="panel panel-shadow" style="max-width: 800px">
                 <div class="panel-heading">
                     <strong>User Search</strong>

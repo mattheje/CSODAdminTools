@@ -64,24 +64,24 @@
                 var childNodesArray = [
                     @if(in_array('lonumadmin',Session::get('userpermissions')) || in_array('lonumadminedit',Session::get('userpermissions')) )
                     { "name": "<span class='icon icon-list'></span> LO Number Generator", "type": "folder", "attr":{"parentNode" : "rootNode", "src" :"", "id":"<span class='icon icon-list'></span> LO Number Generator"}},
-                    { "name": "<span class='icon icon-dashboard'></span> Dashboard", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src" :"{{ URL::action('IndexController@content', []) }}"}},
+                    { "name": "<span class='icon icon-dashboard'></span> Dashboard", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src" :"{{ URL::action('IndexController@dashboard', []) }}"}},
                     @if(in_array('lonumadminedit',Session::get('userpermissions')))
-                    { "name": "<span class='icon icon-add'></span> Create New LO Number", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('IndexController@content', []) }}"}},
-                    { "name": "<span class='icon icon-edit'></span> Manage My LO Numbers", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('IndexController@content', []) }}"}},
-                    { "name": "<span class='icon icon-edit'></span> Manage Others LO Numbers", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('IndexController@content', []) }}"}},
+                    { "name": "<span class='icon icon-add'></span> Create New LO Number", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('LoNumController@createLoNumber', []) }}"}},
+                    { "name": "<span class='icon icon-edit'></span> Manage My LO Numbers", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('IndexController@dashboard', []) }}"}},
+                    { "name": "<span class='icon icon-edit'></span> Manage Others LO Numbers", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('IndexController@dashboard', []) }}"}},
                     @endif
                     @endif
 
                     @if(in_array('csoddeeplink',Session::get('userpermissions')) || in_array('scormautocompbuilder',Session::get('userpermissions')) || in_array('scormnocompbuilder',Session::get('userpermissions')) )
                     { "name": "<span class='icon icon-list'></span> CSOD Content Tools", "type": "folder", "attr":{"parentNode" : "rootNode", "src" :"", "id":"<span class='icon icon-list'></span> CSOD Content Tools"}},
                     @if(in_array('csoddeeplink',Session::get('userpermissions')))
-                    { "name": "<span class='icon icon-dropdown-menu'></span> CSOD Deeplink Generator", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> CSOD Content Tools", "src" :"{{ URL::action('IndexController@content', []) }}"}},
+                    { "name": "<span class='icon icon-dropdown-menu'></span> CSOD Deeplink Generator", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> CSOD Content Tools", "src" :"{{ URL::action('IndexController@dashboard', []) }}"}},
                     @endif
                     @if(in_array('scormautocompbuilder',Session::get('userpermissions')))
-                    { "name": "<span class='icon icon-license-info'></span> SCORM Auto-Complete Builder", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> CSOD Content Tools", "src" :"{{ URL::action('IndexController@content', []) }}"}},
+                    { "name": "<span class='icon icon-license-info'></span> SCORM Auto-Complete Builder", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> CSOD Content Tools", "src" :"{{ URL::action('IndexController@dashboard', []) }}"}},
                     @endif
                     @if(in_array('scormnocompbuilder',Session::get('userpermissions')))
-                    { "name": "<span class='icon icon-indicator'></span> SCORM No-Complete Builder", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> CSOD Content Tools", "src" :"{{ URL::action('IndexController@content', []) }}"}},
+                    { "name": "<span class='icon icon-indicator'></span> SCORM No-Complete Builder", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> CSOD Content Tools", "src" :"{{ URL::action('IndexController@dashboard', []) }}"}},
                     @endif
                     @endif
 

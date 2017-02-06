@@ -14,11 +14,18 @@
 Route::any('/', ['as' => 'index', 'uses' => 'IndexController@index']);
 Route::any('index/maincontent', ['as' => 'maincontent', 'uses' => 'IndexController@maincontent']);
 Route::any('index/menu', ['as' => 'menu', 'uses' => 'IndexController@menu']);
-
-Route::any('index/content', ['as' => 'content', 'uses' => 'IndexController@content']);
+Route::any('index/dashboard', ['as' => 'dashboard', 'uses' => 'IndexController@dashboard']);
 
 Route::any('login', ['as' => 'login', 'uses' => 'LoginController@index']);
 Route::any('login/login', ['as' => 'loginlogin', 'uses' => 'LoginController@login']);
 Route::any('login/logout', ['as' => 'loginlogout', 'uses' => 'LoginController@logout']);
 
 Route::any('user', ['as' => 'userindex', 'uses' => 'UserController@index']);
+
+Route::any('lonum', ['as' => 'createLoNumber', 'uses' => 'LoNumController@createLoNumber']);
+Route::any('lonum/fetchmylos', ['as' => 'fetchmylos', 'uses' => 'LoNumController@fetchMyReservedLOs']);
+Route::any('lonum/fetchmypublos', ['as' => 'fetchmypublos', 'uses' => 'LoNumController@fetchMyPublishedLOs']);
+Route::any('lonum/fetchotherslos', ['as' => 'fetchotherlos', 'uses' => 'LoNumController@fetchOthersReservedLOs']);
+
+Route::any('lonum/step5', ['as' => 'step5', 'uses' => 'LoNumController@step5']);
+

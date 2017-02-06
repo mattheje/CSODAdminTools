@@ -13,7 +13,7 @@
 <div id="demoExampleSplitterVertical" class="n-splitter">
     <iframe class="demo-example-menu-box" id="menu"></iframe>
     <iframe class="demo-example-content-box" name="content" id="content" style="min-width: 250px;"
-            src="{{ URL::action('IndexController@content', []) }}"></iframe>
+            src="{{ URL::action('IndexController@dashboard', []) }}"></iframe>
 </div>
 
 <script type="text/javascript" src="{{ URL::to('/') }}/assets/js/require.js"></script>

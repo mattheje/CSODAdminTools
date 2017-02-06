@@ -11,7 +11,6 @@ class IndexController extends Controller
 
     public function index(Request $request) {
         $this->userId = LoginCheck::isLoggedIn($request);
-
         return view('index.index', []);
     } //end index function
 
@@ -27,10 +26,13 @@ class IndexController extends Controller
         return view('index.menu', []);
     } //end menu function
 
-    public function content(Request $request) {
+    public function dashboard(Request $request) {
         $this->userId = LoginCheck::isLoggedIn($request);
 
-        return view('index.content', []);
-    } //end content function
+        $crsnum = trim($request->input('crsnum'));
+        $msg = trim($request->input('msg'));
+
+        return view('index.dashboard', compact('crsnum', 'msg'));
+    } //end dashboard function
 
 } //end class IndexController
