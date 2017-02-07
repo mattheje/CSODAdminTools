@@ -11,6 +11,10 @@ class LoNumber extends Model
         return DB::table('lng_lonum')->insertGetId($courseData);
     } //end insertLoNumber
 
+    public function unLockLmsLoNumber($loId) {
+        return DB::table('lng_lonum')->where('id', $loId)->delete();
+    } //end unLockLmsLoNumber
+
     public function getMyReservedLOs($ownerId, $lonum) {
         $lonum = str_replace('*', '%', $lonum);
         $where='';

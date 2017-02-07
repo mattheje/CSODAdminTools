@@ -35,7 +35,7 @@
 @stop
 
 @section('content')
-    {!! Form::open(['action' => 'IndexController@dashboard', 'method' => 'post', 'id'=>'srchLoNumForm', 'class' => 'form-horizontal']) !!}
+    {!! Form::open(['action' => 'IndexController@dashboard', 'method' => 'post', 'id' => 'srchLoNumForm', 'class' => 'form-horizontal']) !!}
     <div class="row col-md-12">
         <div class="panel panel-blue-cap" style="max-width: 300px;">
             <div class="panel-heading" style="padding-top: 4px; padding-bottom: 1px; padding-left: 2px; padding-right: 2px; background-image: linear-gradient(to bottom, #fff 0px, #e5e5e5 100%);  min-height: 30px; max-height: 30px;">
@@ -46,37 +46,39 @@
     </div>
     <div class="row col-md-12">
         <div class="col-md-5 col-md-push-7" style="padding-left: 1px;">
-            <div class="panel-shadow-description" style="max-width: 500px;">
+            <div class="panel-shadow-description" style="max-width: 550px;">
                 Instructions:
                 <div class="instructionblock">
-                    Please either click the 'Create New LO Number' button or search for a learning object number using course number or title.  You can also browse through the tables listed below to locate an existing learning object number.<br /><br />
+                    This tool is used to generate/reserve LO/Course Numbers for CSOD.  Please either click the 'Create New LO Number' button or search for a learning object number using course number or title.  You can also browse through the tables listed below to locate an existing learning object number.<br /><br />
                     <button id="newLoNumBtn" onclick="window.location='{{ URL::action('LoNumController@createLoNumber', []) }}';" class="btn btn-defaultBlue btn-standard center-block" type="button">Create New LO Number</button><br />
                 </div>
             </div>
         </div>
         <div class="col-md-7 col-md-pull-5" style="padding-left: 1px;">
-            <div class="panel panel-shadow" style="max-width: 500px">
+            <div class="panel panel-shadow" style="max-width: 450px">
                 <div class="panel-heading">
                     <strong>LO Number Search : </strong>
                 </div>
                 <div class="panel-body">
                     <div class="col-md-12 text-center panel-section">
                         <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="row" style="vertical-align: middle; display: inline-block; float: none;">
+                                <div class="col-md-6" style="margin-top: 7px;">
                                     {!! Form::text('crsnum', $crsnum, ['id' => 'crsnum', 'class' => 'n-inputfield n-inputfield-small', 'size' => '20', 'placeholder' => 'LO Number or Title']) !!}
                                 </div>
-                                <div class="col-md-6 text-left">
+                                <div class="col-md-6">
                                     <button id="srchLoNumBtn" class="btn btn-defaultBlue btn-standard" type="button" onclick="updateDashboardSearchResults($('#crsnum').val());">Search</button>
                                 </div>
                             </div>
-                        </div>
-                        @if(trim($msg) !== '')
-                            <div class="alert center-block">
-                                <span class="icon icon-info"></span>{{ $msg }}
+                            <div class="row">
+                                @if(trim($msg) !== '')
+                                    <div class="alert center-block">
+                                        <span class="icon icon-info"></span>{{ $msg }}
+                                    </div>
+                                @endif
+                                @include('errors.list')
                             </div>
-                        @endif
-                        @include('errors.list')
+                        </div>
                     </div>
                 </div>
             </div>
@@ -116,10 +118,10 @@
                     </div>
                     <i role="button" class="icon icon-close-rounded" data-dismiss="modal" aria-label="Close" tabindex="3" id="TA-dialog-confirmation-content-close"></i>
                     <div style="clear: both"></div>
-                    <div class="modal-title-confirm" id="TA-dialog-confirmation-content-body">This will delete this LO Number from the system.</div>
+                    <div class="modal-title-confirm" id="TA-dialog-confirmation-content-body">This will delete this LO Number from this system (since it is unpublished in CSOD anyways).  Then you or someone else may re-purpose this LO Number.</div>
                 </div>
                 <div class="modal-footer" id="TA-dialog-confirmation-content-footer">
-                    <button class="btn btn-standard" data-dismiss="modal" tabindex="4" type="submit" id="TA-dialog-confirmation-buttons-delete" onclick="document.forms[0].submit();">Release LO Number</button>
+                    <button class="btn btn-standard" data-dismiss="modal" tabindex="4" type="submit" id="TA-dialog-confirmation-buttons-delete" onclick="alert(document.getElementById('loAction').value);document.forms[0].submit();">Release LO Number</button>
                     <button class="btn btn-standard btn-defaultBlue" data-dismiss="modal" tabindex="2" id="TA-dialog-confirmation-buttons-cancel">Cancel</button>
                 </div>
             </div>
@@ -212,7 +214,7 @@
                 if(row.step == 4) {
                     output += '<input type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/E/id/'+encodeURIComponent(row.id)+'\';" value="Continue" />';
                 } //end if
-                output += '<input type="button" id="selectbtn_2_'+rowsOutput+'" document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value = \'R\';" href="#ConfirmationDialogRelease" data-backdrop="false" data-toggle="modal" data-keyboard="true" value="Release" /></span>';
+                output += '<input type="button" id="selectbtn_2_'+rowsOutput+'" onclick="document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value=\'R\';" href="#ConfirmationDialogRelease" data-backdrop="false" data-toggle="modal" data-keyboard="true" value="Release" /></span>';
                 output += '</td>';
                 output += '</tr>';
                 rowsOutput++;
@@ -376,7 +378,7 @@
                 if(row.step == 4) {
                     output += '<input type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/E/id/'+encodeURIComponent(row.id)+'\';" value="Continue" />';
                 } //end if
-                output += '<input type="button" id="selectbtn_2_'+rowsOutput+'" document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value = \'R\';" href="#ConfirmationDialogRelease" data-backdrop="false" data-toggle="modal" data-keyboard="true" value="Release" /></span>';
+                output += '<input type="button" id="selectbtn_2_'+rowsOutput+'" onclick="document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value=\'R\';" href="#ConfirmationDialogRelease" data-backdrop="false" data-toggle="modal" data-keyboard="true" value="Release" /></span>';
                 output += '</td>';
                 output += '</tr>';
                 rowsOutput++;
