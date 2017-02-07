@@ -25,6 +25,10 @@
             width: 100%;
         }
     </style>
+    <script type="text/javascript">
+        if (top.location.href != self.location.href)
+            top.location.href = "{{ URL::action('LoginController@index', ['msg' => 'Session Timed Out']) }}";
+    </script>
 </head>
 <body class="demo-body-content" style="background:transparent;">
 <div class="n-login-wrapper">

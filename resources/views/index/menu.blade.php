@@ -66,7 +66,7 @@
                     { "name": "<span class='icon icon-list'></span> LO Number Generator", "type": "folder", "attr":{"parentNode" : "rootNode", "src" :"", "id":"<span class='icon icon-list'></span> LO Number Generator"}},
                     { "name": "<span class='icon icon-dashboard'></span> Dashboard", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src" :"{{ URL::action('IndexController@dashboard', []) }}"}},
                     @if(in_array('lonumadminedit',Session::get('userpermissions')))
-                    { "name": "<span class='icon icon-add'></span> Create New LO Number", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('LoNumController@createLoNumber', []) }}"}},
+                    { "name": "<span class='icon icon-add'></span> Create New LO Number", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('LoNumController@step1', []) }}"}},
                     { "name": "<span class='icon icon-edit'></span> Manage My LO Numbers", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('IndexController@dashboard', []) }}"}},
                     { "name": "<span class='icon icon-edit'></span> Manage Others LO Numbers", "type": "item", "attr":{"parentNode" : "<span class='icon icon-list'></span> LO Number Generator", "src":"{{ URL::action('IndexController@dashboard', []) }}"}},
                     @endif

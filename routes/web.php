@@ -22,7 +22,8 @@ Route::any('login/logout', ['as' => 'loginlogout', 'uses' => 'LoginController@lo
 
 Route::any('user', ['as' => 'userindex', 'uses' => 'UserController@index']);
 
-Route::any('lonum', ['as' => 'createLoNumber', 'uses' => 'LoNumController@createLoNumber']);
+Route::any('lonum', ['as' => 'step1', 'uses' => 'LoNumController@step1']);
+Route::any('lonum/step1', ['as' => 'step1', 'uses' => 'LoNumController@step1']);
 Route::any('lonum/fetchmylos', ['as' => 'fetchmylos', 'uses' => 'LoNumController@fetchMyReservedLOs']);
 Route::any('lonum/fetchmypublos', ['as' => 'fetchmypublos', 'uses' => 'LoNumController@fetchMyPublishedLOs']);
 Route::any('lonum/fetchotherslos', ['as' => 'fetchotherlos', 'uses' => 'LoNumController@fetchOthersReservedLOs']);

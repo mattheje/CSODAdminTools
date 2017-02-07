@@ -299,9 +299,7 @@
             output += '<tr>';
             output += '<td colspan="'+ columns +'">';
             output += '<div class="n-table-total">';
-            output += '<button id="TA-tableWithPaging-previousPage" class="btn btn-icon" type="button">';
-            output += '<span>Total:  '+total+'</span>';
-            output += '</button>';
+            output += '<span style="vertical-align: text-bottom;">Total:  '+total+'</span>';
             output += '</div>';
             output += '<div class="n-table-pagenum">';
             if(previous) {

@@ -50,7 +50,7 @@
                 Instructions:
                 <div class="instructionblock">
                     This tool is used to generate/reserve LO/Course Numbers for CSOD.  Please either click the 'Create New LO Number' button or search for a learning object number using course number or title.  You can also browse through the tables listed below to locate an existing learning object number.<br /><br />
-                    <button id="newLoNumBtn" onclick="window.location='{{ URL::action('LoNumController@createLoNumber', []) }}';" class="btn btn-defaultBlue btn-standard center-block" type="button">Create New LO Number</button><br />
+                    <button id="newLoNumBtn" onclick="window.location='{{ URL::action('LoNumController@step1', []) }}';" class="btn btn-defaultBlue btn-standard center-block" type="button">Create New LO Number</button><br />
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
                     <div class="modal-title-confirm" id="TA-dialog-confirmation-content-body">This will delete this LO Number from this system (since it is unpublished in CSOD anyways).  Then you or someone else may re-purpose this LO Number.</div>
                 </div>
                 <div class="modal-footer" id="TA-dialog-confirmation-content-footer">
-                    <button class="btn btn-standard" data-dismiss="modal" tabindex="4" type="submit" id="TA-dialog-confirmation-buttons-delete" onclick="alert(document.getElementById('loAction').value);document.forms[0].submit();">Release LO Number</button>
+                    <button class="btn btn-standard" data-dismiss="modal" tabindex="4" type="submit" id="TA-dialog-confirmation-buttons-delete" onclick="document.forms[0].submit();">Release LO Number</button>
                     <button class="btn btn-standard btn-defaultBlue" data-dismiss="modal" tabindex="2" id="TA-dialog-confirmation-buttons-cancel">Cancel</button>
                 </div>
             </div>
@@ -408,9 +408,7 @@
             output += '<tr>';
             output += '<td colspan="'+ columns +'">';
             output += '<div class="n-table-total">';
-            output += '<button id="TA-tableWithPaging-previousPage" class="btn btn-icon" type="button">';
-            output += '<span>Total:  '+total+'</span>';
-            output += '</button>';
+            output += '<span style="vertical-align: text-bottom;">Total:  '+total+'</span>';
             output += '</div>';
             output += '<div class="n-table-pagenum">';
             if(previous) {
