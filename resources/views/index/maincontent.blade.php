@@ -6,7 +6,7 @@
     <link href="{{ URL::to('/') }}/wulfdist/css/jqx.base.css" rel="stylesheet"/>
     <link href="{{ URL::to('/') }}/wulfdist/css/wulf.min.css" rel="stylesheet"/>
     <link href="{{ URL::to('/') }}/wulfdist/css/wulf.splitter.min.css" rel="stylesheet"/>
-    <link href="{{ URL::to('/') }}/assets/css/demo.css" rel="stylesheet"/>
+    <link href="{{ URL::to('/') }}/css/demo.css" rel="stylesheet"/>
     <title>{{ env('APP_NAME_FULL') }} Main Content</title>
 </head>
 <body style="background: white; overflow: hidden;">

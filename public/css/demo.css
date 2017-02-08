@@ -76,12 +76,6 @@ hr {
 	padding: 10px 0 0 0;
 }
 
-.demo-header .n-banner-brand {
-	padding-left: 80px;
-
-	background: url("../images/wulf.png") no-repeat 0 center;
-}
-
 .demo-header .n-banner-brand > h1 {
 	margin: 0;
 	line-height: 45px;

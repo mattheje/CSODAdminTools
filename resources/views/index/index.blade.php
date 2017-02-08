@@ -15,7 +15,7 @@
     <link href="{{ URL::to('/') }}/wulfdist/css/wulf.links.min.css" rel="stylesheet"/>
     <link href="{{ URL::to('/') }}/wulfdist/css/wulf.panel.min.css" rel="stylesheet"/>
     <link href="{{ URL::to('/') }}/wulfdist/css/wulf.footer.min.css" rel="stylesheet"/>
-    <link href="{{ URL::to('/') }}/assets/css/demo.css" rel="stylesheet"/>
+    <link href="{{ URL::to('/') }}/css/demo.css" rel="stylesheet"/>
     <title>{{ env('APP_NAME_FULL') }}</title>
 
 </head>
