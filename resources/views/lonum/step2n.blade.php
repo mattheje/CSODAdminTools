@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    {!! Form::open(['action' => 'LoNumController@step1', 'method' => 'post', 'id' => 'loNumForm', 'onsubmit' =>'return validateCourseWizardForm();', 'class' => 'form-horizontal']) !!}
+    {!! Form::open(['action' => 'LoNumController@step2n', 'method' => 'post', 'id' => 'loNumForm', 'onsubmit' =>'return validateCourseWizardForm();', 'class' => 'form-horizontal']) !!}
     <div class="row col-md-12">
         <div class="panel panel-blue-cap" style="max-width: 300px;">
             <div class="panel-heading" style="padding-top: 4px; padding-bottom: 1px; padding-left: 2px; padding-right: 2px; background-image: linear-gradient(to bottom, #fff 0px, #e5e5e5 100%);  min-height: 30px; max-height: 30px;">
@@ -28,7 +28,7 @@
         <div class="col-md-9 col-md-pull-3" style="padding-left: 1px;">
             <div class="panel panel-shadow" style="max-width: 800px">
                 <div class="panel-heading">
-                    <strong>Step 1:  Select Creation Method</strong>
+                    <strong>Step 2:  Select Creation Method</strong>
                 </div>
                 <div class="panel-body">
                     <div class="panel-section">

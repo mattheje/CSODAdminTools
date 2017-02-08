@@ -2,24 +2,6 @@
 
 @section('additionalCss')
     <style type="text/css">
-        body {
-            overflow: hidden; background: url('{{ URL::to('/') }}/img/contentbkgr1.jpg') no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
-        .instructionblock {
-            background-color: #f5f5f5;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            color: #1b1b1b;
-            display: block;
-            font-size: 12.5px;
-            line-height: 1.42857;
-            margin: 0 0 10px;
-            padding: 9px;
-        }
         .n-drilldown-table tr:nth-child(4n+2) td { /* Fix error in WULF CSS */
         !important;
             padding-left: 8px;
@@ -138,8 +120,6 @@
 @section('additionalJs')
     <script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{ URL::to('/') }}/assets/js/require.js"></script>
-    <script type="text/javascript" src="{{ URL::to('/') }}/assets/js/require-config.js"></script>
     <script type="text/javascript">
 
         $(document).ready(function() {

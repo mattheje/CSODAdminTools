@@ -28,7 +28,7 @@
         <div class="col-md-9 col-md-pull-3" style="padding-left: 1px;">
             <div class="panel panel-shadow" style="max-width: 800px">
                 <div class="panel-heading">
-                    <strong>Step 1:  Select Creation Method</strong>
+                    <strong>Step 2:  Select Creation Method</strong>
                 </div>
                 <div class="panel-body">
                     <div class="panel-section">

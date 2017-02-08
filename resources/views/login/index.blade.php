@@ -91,11 +91,12 @@
 </div>
 <script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/jquery.min.js"></script>
 <script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/bootstrap.min.js"></script>
-<script type="text/javascript" src="{{ URL::to('/') }}/assets/js/require.js"></script>
-<script type="text/javascript" src="{{ URL::to('/') }}/assets/js/require-config.js"></script>
+<script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/fuelux.min.js"></script>
+<script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/jquery.mCustomScrollbar.js"></script>
+<script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/components/keyboard/keyboard-core.js"></script>
+<script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/components/inputfield.js"></script>
 <script type="text/javascript">
-    require(['wulf/inputfield']);
-
     $(function () {
         $('[data-toggle="tooltip_un"]').tooltip({container: 'body', delay:300});
     });

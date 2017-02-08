@@ -15,9 +15,6 @@
     <iframe class="demo-example-content-box" name="content" id="content" style="min-width: 250px;"
             src="{{ URL::action('IndexController@dashboard', ['msg'=>$msg]) }}"></iframe>
 </div>
-
-<script type="text/javascript" src="{{ URL::to('/') }}/assets/js/require.js"></script>
-<script type="text/javascript" src="{{ URL::to('/') }}/assets/js/require-config.js"></script>
 <script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/jquery.min.js"></script>
 <script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/jqxcore.js"></script>
 <script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/jqxsplitter.js"></script>
