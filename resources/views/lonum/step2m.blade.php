@@ -47,6 +47,15 @@
                                     <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Check Course Number Availability</button>
                                 </span>
                             </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                @if(trim($msg) !== '')
+                                    <div class="alert center-block">
+                                        <span class="icon icon-info"></span>{{ $msg }}
+                                    </div>
+                                @endif
+                                @include('errors.list')
+                            </div>
                         </div>
                     </div>
                 </div>
