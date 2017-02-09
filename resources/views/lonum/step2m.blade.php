@@ -40,13 +40,54 @@
                                     <a class="form-control-feedback form-control-feedback-small"><span class="icon icon-mandatory"></span></a>
                                 </div>
                             </div>
+                            @if($go == 1 && strlen($rcourse_no) > 3)
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                @if($valid == true)
+                                    <div class="alert center-block">
+                                        <span class="icon icon-info"></span>
+                                        <font color="green">Congratulations</font></strong>, the LO/Course Number <strong><?php echo $rcourse_no; ?></strong> (Version 1.0) is available and can be reserved.
+                                        @if(is_array($messages) && count($messages) > 0)
+                                            <strong>However, the following <font color="orange">warning(s)</font> apply:</strong><br/>
+                                            <ul>
+                                                @foreach ($messages as $message)
+                                                    <li>{{ $message }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </div>
+                                @else
+                                    <div class="alert center-block">
+                                        <span class="icon icon-info"></span>
+                                        Sorry, <strong><font color='red'><?php echo $rcourse_no; ?></font></strong> (Version: 1.0) is <strong><font color='red'>not available</font></strong>.  Please try another course number and check again.
+                                        @if(is_array($messages) && count($messages) > 0)
+                                            <strong>The reason:</strong><br/>
+                                            <ul>
+                                                @foreach ($messages as $message)
+                                                    <li>{{ $message }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </div>
+                                @endif
+                            </div>
+                            @endif
+
                             <div class="row">&nbsp;</div>
                             <div class="row text-center">
                                 <span>
-                                    <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick="">Prev</button> &nbsp;
-                                    <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Check Course Number Availability</button>
+                                    @if($valid == true)
+                                        <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick="history.go(-1);">Prev</button> &nbsp;
+                                        <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Check Course Number Availability</button>
+                                    @else
+                                        <button id="LoNumBtn4" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(4);" type="submit">Release &amp; Check Another Course Number</button>
+                                        <button id="LoNumBtn3" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(3);" type="submit">Release &amp; Start Over</button>
+                                        <button id="LoNumBtn2" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(2);" type="submit">Release &amp; Use Course/LO Number Generator</button>
+                                        <button id="LoNumBtn1" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(1);" type="submit">Reserve &amp; Continue</button>
+                                    @endif
                                 </span>
                             </div>
+
                             <div class="row">&nbsp;</div>
                             <div class="row">
                                 @if(trim($msg) !== '')
@@ -67,6 +108,7 @@
     {!! Form::hidden('id', $id, array('id' => 'id')) !!}
     {!! Form::hidden('go', '1', array('id' => 'go')) !!}
     {!! Form::hidden('act', $act, array('id' => 'act')) !!}
+    {!! Form::hidden('course_no_raw', $course_no_raw, array('id' => 'course_no_raw')) !!}
     {!! Form::close() !!}
 
 @stop
