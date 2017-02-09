@@ -44,11 +44,11 @@
                             <div class="row">&nbsp;</div>
                             <div class="row">
                                 @if($valid == true)
-                                    <div class="alert center-block">
+                                    <div class="alert center-block" style="margin-left: 20px; margin-right: 20px;">
                                         <span class="icon icon-info"></span>
                                         <font color="green">Congratulations</font></strong>, the LO/Course Number <strong><?php echo $rcourse_no; ?></strong> (Version 1.0) is available and can be reserved.
                                         @if(is_array($messages) && count($messages) > 0)
-                                            <strong>However, the following <font color="orange">warning(s)</font> apply:</strong><br/>
+                                            <br/>However, the following <font color="orange">warning(s)</font> apply:<br/>
                                             <ul>
                                                 @foreach ($messages as $message)
                                                     <li>{{ $message }}</li>
@@ -57,11 +57,11 @@
                                         @endif
                                     </div>
                                 @else
-                                    <div class="alert center-block">
-                                        <span class="icon icon-info"></span>
-                                        Sorry, <strong><font color='red'><?php echo $rcourse_no; ?></font></strong> (Version: 1.0) is <strong><font color='red'>not available</font></strong>.  Please try another course number and check again.
+                                    <div class="alert center-block" style="margin-left: 20px; margin-right: 20px;">
+                                        <span class="icon icon-error"></span>
+                                        Sorry, <font color='red'><?php echo $rcourse_no; ?></font></strong> (Version: 1.0) is <font color='red'>not available</font></strong>.  Please try another course number and check again.
                                         @if(is_array($messages) && count($messages) > 0)
-                                            <strong>The reason:</strong><br/>
+                                            <br/><strong>The reason:</strong><br/>
                                             <ul>
                                                 @foreach ($messages as $message)
                                                     <li>{{ $message }}</li>
@@ -77,13 +77,13 @@
                             <div class="row text-center">
                                 <span>
                                     @if($valid == true)
-                                        <button id="LoNumBtn4" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(4);" type="submit">Release &amp; Check Another Course Number</button>
+                                        <button id="LoNumBtn4" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(4);" type="submit">Release &amp; Check Another LO/Course Number</button>
                                         <button id="LoNumBtn3" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(3);" type="submit">Release &amp; Start Over</button>
                                         <!-- <button id="LoNumBtn2" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(2);" type="submit">Release &amp; Use Course/LO Number Generator</button> -->
                                         <button id="LoNumBtn1" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(1);" type="submit">Reserve &amp; Continue</button>
                                     @else
                                         <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick="history.go(-1);">Prev</button> &nbsp;
-                                        <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Check Course Number Availability</button>
+                                        <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Check LO/Course Number Availability</button>
                                     @endif
                                 </span>
                             </div>
