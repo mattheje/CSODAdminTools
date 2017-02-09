@@ -77,13 +77,13 @@
                             <div class="row text-center">
                                 <span>
                                     @if($valid == true)
-                                        <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick="history.go(-1);">Prev</button> &nbsp;
-                                        <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Check Course Number Availability</button>
-                                    @else
                                         <button id="LoNumBtn4" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(4);" type="submit">Release &amp; Check Another Course Number</button>
                                         <button id="LoNumBtn3" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(3);" type="submit">Release &amp; Start Over</button>
-                                        <button id="LoNumBtn2" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(2);" type="submit">Release &amp; Use Course/LO Number Generator</button>
+                                        <!-- <button id="LoNumBtn2" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(2);" type="submit">Release &amp; Use Course/LO Number Generator</button> -->
                                         <button id="LoNumBtn1" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(1);" type="submit">Reserve &amp; Continue</button>
+                                    @else
+                                        <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick="history.go(-1);">Prev</button> &nbsp;
+                                        <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Check Course Number Availability</button>
                                     @endif
                                 </span>
                             </div>

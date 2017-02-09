@@ -102,7 +102,7 @@ ENDSQLTXT;
         $db = DB::connection()->getPdo();
         $sth = $db->prepare($sql);
         $sth->execute([$id]);
-        return $sth->fetch(PDO::FETCH_ASSOC);
+        return $sth->fetch();
     } //end getLmsCourseGenDataById
 
     public function checkManuallyEnteredCourseNumber($rcourse_no, $owner_id) {
@@ -205,7 +205,7 @@ ENDSQLTXT;
         $db = DB::connection()->getPdo();
         $sth = $db->prepare($sql);
         $sth->execute([strtoupper(trim($course_no)), trim(strtoupper($version))]);
-        $row = $sth->fetch(PDO::FETCH_ASSOC);
+        $row = $sth->fetch();
 
         if(isset($row['id']) && $row['id'] > 0) {
             //update
