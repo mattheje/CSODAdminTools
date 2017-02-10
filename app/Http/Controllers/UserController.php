@@ -15,6 +15,7 @@ class UserController extends Controller
         $this->userId = LoginCheck::isLoggedIn($request);
         $srchName = trim($request->input('srchName'));
         $srchCsl = trim($request->input('srchCsl'));
+        $srchImprt = $request->input('srchImprt',0);
         $action = strtoupper(trim($request->input('userAction')));
         $actionUserId = trim($request->input('userActionUserID'));
         $allParams = $request->all();
@@ -48,12 +49,12 @@ class UserController extends Controller
         } //end switch
 
         $usersData = $userModel->getUsersByNameOrCsl($srchName, $srchCsl);
-        $ldapData = $userModel->searchFAluLdapForUser($srchName, $srchCsl, $usersData);
+        $ldapData = $userModel->searchFAluLdapForUser($srchName, $srchCsl, $srchImprt, $usersData);
         $usersData = json_encode(array_merge($ldapData,$usersData));
         $toolsData = json_encode($toolModel->getAllTools());
         $permissionsData = json_encode($userModel->getAllUsersPermissions($srchName, $srchCsl));
 
-        return view('user.index', compact('usersData', 'toolsData', 'permissionsData', 'srchName', 'srchCsl', 'msg'));
+        return view('user.index', compact('usersData', 'toolsData', 'permissionsData', 'srchName', 'srchCsl', 'srchImprt', 'msg'));
 
     } //end index
 

@@ -76,7 +76,7 @@
                                 @if($valid == true)
                                     <div class="alert center-block" style="margin-left: 20px; margin-right: 20px;">
                                         <span class="icon icon-info"></span>
-                                        <font color="green">Congratulations</font></strong>, the LO/Course Number <strong><?php echo $rcourse_no; ?></strong> (Version 1.0) is available and can be reserved.
+                                        <font color="green">Congratulations</font></strong>, the LO/Course Number <strong>{{ $rcourse_no }}</strong> (Version 1.0) is available and can be reserved.
                                         @if(is_array($messages) && count($messages) > 0)
                                             <br/>However, the following <font color="orange">warning(s)</font> apply:<br/>
                                             <ul>
@@ -89,7 +89,7 @@
                                 @else
                                     <div class="alert center-block" style="margin-left: 20px; margin-right: 20px;">
                                         <span class="icon icon-error"></span>
-                                        Sorry, <font color='red'><?php echo $rcourse_no; ?></font></strong> (Version: 1.0) is <font color='red'>not available</font></strong>.  Please try another course number and check again.
+                                        Sorry, <font color='red'>{{ $rcourse_no }}</font></strong> (Version: 1.0) is <font color='red'>not available</font></strong>.  Please try another course number and check again.
                                         @if(is_array($messages) && count($messages) > 0)
                                             <br/><strong>The reason:</strong><br/>
                                             <ul>

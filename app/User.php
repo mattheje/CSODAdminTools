@@ -202,10 +202,10 @@ ENDSQLTEXT;
 
     } //end getUsersByNameOrCsl
 
-    public function searchFAluLdapForUser($srchName, $srchCsl, $usersData) {
+    public function searchFAluLdapForUser($srchName, $srchCsl, $srchImprt, $usersData) {
         $srchName = str_replace('%', '*', $srchName);
         $srchCsl = str_replace('%', '*', $srchCsl);
-        if(trim($srchName) == '' && trim($srchCsl) == '') return array();
+        if((trim($srchName) == '' && trim($srchCsl) == '') || ($srchImprt == 1)) return array();
 
         $ldap = ldap_connect(env('ALU_LDAP_HOST'), env('ALU_LDAP_PORT'));
         if (!($ldap)) return -1;

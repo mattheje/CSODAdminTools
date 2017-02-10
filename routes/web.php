@@ -30,6 +30,8 @@ Route::any('lonum/step2v', ['as' => 'step2v', 'uses' => 'LoNumController@step2v'
 Route::any('lonum/fetchmylos', ['as' => 'fetchmylos', 'uses' => 'LoNumController@fetchMyReservedLOs']);
 Route::any('lonum/fetchmypublos', ['as' => 'fetchmypublos', 'uses' => 'LoNumController@fetchMyPublishedLOs']);
 Route::any('lonum/fetchotherslos', ['as' => 'fetchotherlos', 'uses' => 'LoNumController@fetchOthersReservedLOs']);
+Route::any('lonum/searchcourseforvers', ['as' => 'searchcourseforvers', 'uses' => 'LoNumController@searchCourseDataForVersioning']);
+Route::any('lonum/getnextcrsversion', ['as' => 'getnextcrsversion', 'uses' => 'LoNumController@getNextCourseVersion']);
 
 Route::any('lonum/step5', ['as' => 'step5', 'uses' => 'LoNumController@step5']);
 

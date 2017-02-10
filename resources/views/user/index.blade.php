@@ -59,6 +59,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group has-feedback">
+                                <div class="col-md-12">
+                                    <label class="col-md-4 control-label-sm" style="white-space: nowrap;"></label>
+                                    <div class="col-md-8 input-required">
+                                        <div class="checkbox" style="text-align: left;">
+                                            {!! Form::checkbox('srchImprt', 1, ($srchImprt == 1), ['id'=>'srchImprt']) !!}
+                                            <label id="TA-Checkbox-smallcheck1" for="srchImprt">Filter Out LDAP Search For New Users</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <button id="srchUserBtn" class="btn btn-defaultBlue btn-standard center-block" type="submit"><span class="icon icon-search"></span> Search For User</button>
                             @if(trim($msg) !== '')
                             <div class="alert center-block">
@@ -145,7 +156,7 @@
         var lonumgenToolData={!! $toolsData !!};
         var lonumgenPermissionData={!! $permissionsData !!};
 
-        var userAdminTableRowsPerPage = 10;
+        var userAdminTableRowsPerPage = 7;
 
         $(document).ready(function() {
             buildUserAdministrationTable(0, 'userAdminTableDiv');

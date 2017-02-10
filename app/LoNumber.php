@@ -85,6 +85,83 @@ ENDSQLTEXT;
         return $sth->fetchAll();
     } //end getOthersReservedLOs
 
+    public function searchLmsCourseDataRaw($lonum) {
+        $lonum = str_replace('*', '%', $lonum);
+        $crsnumsrch = trim($lonum).'%';
+        $titlesrch = '%'.trim($lonum).'%';
+
+        $sql = <<<ENDSQLTEXT
+        SELECT    'Here' AS place,
+                  TRIM(UPPER(g.course_no_raw)) AS course_no,
+                  IFNULL(NULLIF(TRIM(UPPER(g.`version`)),''),'1.0') AS version,
+                  CONCAT(TRIM(UPPER(g.course_no_raw)),'_V',IFNULL(NULLIF(TRIM(UPPER(g.`version`)),''),'1.0')) AS combined,
+                  TRIM(g.course_title) AS course_title,
+                  CONCAT(u.fname,' ',u.lname) AS owner,
+                  IFNULL(g.inserted_on,'Unknown') AS cdate
+        FROM      `lng_lonum` g
+        LEFT JOIN `lng_users` u
+        ON        (g.owner_id=u.id)
+        WHERE     NULLIF(TRIM(g.course_no_raw),'') IS NOT NULL
+        AND       (g.course_no_raw LIKE ?
+                   OR
+                   g.course_title LIKE ?)
+        UNION
+        SELECT    'CSOD' AS place,
+                  SUBSTRING_INDEX(UPPER(TRIM(lmsc.course_no)),'_V',1) AS course_no,
+                  IFNULL(NULLIF(TRIM(UPPER(lmsc.`version`)),''),'1.0') AS version,
+                  CONCAT(SUBSTRING_INDEX(UPPER(TRIM(lmsc.course_no)),'_V',1),'_V',IFNULL(NULLIF(TRIM(UPPER(lmsc.`version`)),''),'1.0')) AS combined,
+                  TRIM(lmsc.course_title) AS course_title,
+                  IFNULL(lmsc.lms_created_by,lmsc.lms_updated_by) AS owner,
+                  IFNULL(lmsc.lms_updated_on,'Unknown') AS cdate
+        FROM      `lms_los` lmsc
+        WHERE     NULLIF(TRIM(lmsc.course_no),'') IS NOT NULL
+        AND       (SUBSTRING_INDEX(UPPER(TRIM(lmsc.course_no)),'_V',1) LIKE ?
+                   OR
+                   lmsc.course_title LIKE ?)
+        ORDER BY   place DESC, course_no ASC, INET_ATON(SUBSTRING_INDEX(CONCAT(version,'.0.0.0'),'.',4)) ASC, cdate ASC
+ENDSQLTEXT;
+        $db = DB::connection()->getPdo();
+        $sth = $db->prepare($sql);
+        $sth->execute([$crsnumsrch,$titlesrch,$crsnumsrch,$titlesrch]);
+        $rows = $sth->fetchAll();
+        $unique=array();
+        foreach($rows as $row) {
+            $unique[$row['combined']]=$row;
+        } //end foreach
+        $returnary=array();
+        foreach($unique as $result) $returnary[]=$result;
+        return $returnary;
+    } //end searchLmsCourseDataRaw
+
+    public function getNextCourseVersionNumber($lonum) {
+        $lonum = trim(strtoupper($lonum));
+        $sql = <<<ENDSQLTEXT
+        SELECT    IFNULL(MAX(T.version),'1.0') AS max_version FROM (
+          SELECT    TRIM(UPPER(g.course_no_raw)) AS course_no,
+                    IFNULL(NULLIF(TRIM(UPPER(g.`version`)),''),'1.0') AS version
+          FROM      `lng_lonum` g
+          WHERE     NULLIF(TRIM(g.course_no_raw),'') IS NOT NULL
+          AND       g.course_no_raw=?
+          UNION
+          SELECT    SUBSTRING_INDEX(UPPER(TRIM(lmsc.course_no)),'_V',1) AS course_no,
+                    IFNULL(NULLIF(TRIM(UPPER(lmsc.`version`)),''),'1.0') AS version
+          FROM      `lms_los` lmsc
+          WHERE     NULLIF(TRIM(lmsc.course_no),'') IS NOT NULL
+          AND       SUBSTRING_INDEX(UPPER(TRIM(lmsc.course_no)),'_V',1)=?
+          ) T
+ENDSQLTEXT;
+        $db = DB::connection()->getPdo();
+        $sth = $db->prepare($sql);
+        $sth->execute([$lonum, $lonum]);
+        $val = $sth->fetchColumn();
+
+        if(is_numeric($val)) {
+            return array('nextversion'=>($val+0.1));
+        } else {
+            return array('nextversion'=>'');
+        } //end if
+    } //end getNextCourseVersionNumber
+
     public function getLmsCourseGenDataById($id) {
         $sql = <<<ENDSQLTXT
         SELECT    gen.*, CONCAT(u.fname,' ',u.lname) as name, u.email,
@@ -257,5 +334,62 @@ ENDSQLTXT;
             'updated_by' => trim($username));
         DB::table('lng_lonum')->where('id', $id)->update($update_ary);
     } //end updateLmsCourseCreationStep
+
+    public function checkNewVersionNumber($course_no, $version, $owner_id) {
+        $course_no = trim(strtoupper($course_no));
+        $version = trim(strtoupper($version));
+        $sql = <<<ENDSQLTEXT
+        SELECT    'E' AS type, 'M' AS place,
+                  TRIM(UPPER(g.course_no_raw)) AS course_no,
+                  IFNULL(NULLIF(TRIM(UPPER(g.`version`)),''),'1.0') AS version,
+                  CONCAT(u.fname,' ',u.lname) AS owner,
+                  IFNULL(g.inserted_on,'Unknown') AS cdate
+        FROM      `lng_lonum` g
+        LEFT JOIN `lng_users` u
+        ON        (g.owner_id=u.id)
+        WHERE     NULLIF(TRIM(g.course_no_raw),'') IS NOT NULL
+        AND       g.course_no_raw=?
+        AND       IFNULL(NULLIF(TRIM(UPPER(g.`version`)),''),'1.0')=?
+        AND       g.step >= 4
+        UNION
+        SELECT    'E' AS type, 'C' AS place,
+                  SUBSTRING_INDEX(UPPER(TRIM(lmsc.course_no)),'_V',1) AS course_no,
+                  IFNULL(NULLIF(TRIM(UPPER(lmsc.`version`)),''),'1.0') AS version,
+                  IFNULL(lmsc.lms_created_by,lmsc.lms_updated_by) AS owner,
+                  IFNULL(lmsc.lms_updated_on,'Unknown') AS cdate
+        FROM      `lms_los` lmsc
+        WHERE     NULLIF(TRIM(lmsc.course_no),'') IS NOT NULL
+        AND       SUBSTRING_INDEX(UPPER(TRIM(lmsc.course_no)),'_V',1)=?
+        AND       IFNULL(NULLIF(TRIM(UPPER(lmsc.`version`)),''),'1.0')=?
+        UNION
+        SELECT    'E' AS type, 'M' AS place,
+                  r.course_no,
+                  IFNULL(NULLIF(TRIM(UPPER(r.`version`)),''),'1.0') AS version,
+                  r.owner,
+                  IFNULL(r.inserted_on,'Unknown') AS cdate
+        FROM      `lng_lonum_resv` r
+        WHERE     r.course_no IS NOT NULL
+        AND       r.course_no=?
+        AND       IFNULL(NULLIF(TRIM(UPPER(r.`version`)),''),'1.0')=?
+        UNION
+        SELECT    'W' AS type, 'M' AS place,
+                  TRIM(UPPER(g.course_no_raw)) AS course_no,
+                  IFNULL(NULLIF(TRIM(UPPER(g.`version`)),''),'1.0') AS version,
+                  CONCAT(u.fname,' ',u.lname) AS owner,
+                  IFNULL(g.inserted_on,'Unknown') AS cdate
+        FROM      `lng_lonum` g
+        LEFT JOIN `lng_users` u
+        ON        (g.owner_id=u.id)
+        WHERE     NULLIF(TRIM(g.course_no_raw),'') IS NOT NULL
+        AND       g.course_no_raw=?
+        AND       IFNULL(NULLIF(TRIM(UPPER(g.`version`)),''),'1.0')=?
+        AND       g.owner_id <> ?
+        ORDER BY  type ASC, place ASC, course_no ASC, INET_ATON(SUBSTRING_INDEX(CONCAT(version,'.0.0.0'),'.',4)) ASC, cdate ASC
+ENDSQLTEXT;
+        $db = DB::connection()->getPdo();
+        $sth = $db->prepare($sql);
+        $sth->execute([$course_no,$version,$course_no,$version,$course_no,$version,$course_no,$version,$owner_id]);
+        return $sth->fetchAll();
+    } //end checkNewVersionNumber
 
 } //end class
