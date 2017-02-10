@@ -1,13 +1,26 @@
 @extends('app')
 
 @section('additionalCss')
+    <link href="{{ URL::to('/') }}/wulfdist/css/wulf.tabpane.min.css" rel="stylesheet"/>
     <style type="text/css">
 
     </style>
+    <script type="text/javascript">
+
+        function validateCourseWizardForm() {
+            if(!($('input[name=method]:checked').val() != '')) {
+                alert("Please Select a New Course/LO Number Creation Method.");
+                return false;
+            } //end if
+            return true;
+        } //end validateCourseWizardForm
+
+    </script>
 @stop
 
 @section('content')
-    {!! Form::open(['action' => 'LoNumController@step1', 'method' => 'post', 'id' => 'loNumForm', 'onsubmit' =>'return validateCourseWizardForm();', 'class' => 'form-horizontal']) !!}
+    {!! Form::open(['action' => 'LoNumController@step1', 'method' => 'post', 'id' => 'frmCsodCourseWizardStep1',
+                    'name' => 'frmCsodCourseWizardStep1', 'onsubmit' => 'return validateCourseWizardForm();', 'class' => 'form-horizontal']) !!}
     <div class="row col-md-12">
         <div class="panel panel-blue-cap" style="max-width: 300px;">
             <div class="panel-heading" style="padding-top: 4px; padding-bottom: 1px; padding-left: 2px; padding-right: 2px; background-image: linear-gradient(to bottom, #fff 0px, #e5e5e5 100%);  min-height: 30px; max-height: 30px;">
@@ -21,6 +34,19 @@
             <div class="panel-shadow-description" style="max-width: 400px;">
                 Instructions:
                 <div class="instructionblock">
+                    <div class="n-dlg-wizard in" role="dialog" id="myWizardDialog" aria-labelledby="myModalDlgLabel-subhead" aria-hidden="true" tabindex="-1" style="display: block; padding-right: 17px;">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <ul class="nav nav-pills">
+                                    <li class="active" style="width: calc(25% - 13.3333px);"><a href="#" data-toggle="tab" aria-expanded="true"><span>1</span></a></li>
+                                    <li style="width: calc(25% - 13.3333px);" class=""><a href="#" data-toggle="tab" aria-expanded="false"><span>2</span></a></li>
+                                    <li style="width: calc(25% - 13.3333px);" class=""><a href="#" data-toggle="tab" aria-expanded="false"><span>3</span></a></li>
+                                    <li style="width: calc(25% - 13.3333px);" class=""><a href="#" data-toggle="tab" aria-expanded="false"><span>4</span></a></li>
+                                    <li class=""><a href="#" data-toggle="tab" aria-expanded="false"><span>5</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     This wizard will guide you through new course number and data creation for CSOD<br/><br/>Please select how you would like to create a new course:<br/><br/>
                 </div>
             </div>
@@ -63,14 +89,14 @@
                             <div class="row">&nbsp;</div>
                             <div class="row text-center">
                                 <span>
-                                    <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick="">Back</button> &nbsp;
-                                    <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Next</button>
+                                    <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick=""><span class='icon icon-back'></span> Back</button> &nbsp;
+                                    <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Next <span class='icon icon-next'></span></button>
                                 </span>
                             </div>
                             <div class="row">&nbsp;</div>
                             <div class="row">
                                 @if(trim($msg) !== '')
-                                    <div class="alert center-block">
+                                    <div class="alert center-block" style="margin-left: 20px; margin-right: 20px;">
                                         <span class="icon icon-info"></span>{{ $msg }}
                                     </div>
                                 @endif
@@ -91,16 +117,5 @@
 @stop
 
 @section('additionalJs')
-    <script type="text/javascript">
-
-        function validateCourseWizardForm() {
-            if(!($('input[name=method]:checked').val() != '')) {
-                alert("Please Select a New Course/LO Number Creation Method.");
-                return false;
-            } //end if
-            return true;
-        } //end validateCourseWizardForm
-
-    </script>
 @stop
 

@@ -1,13 +1,30 @@
 @extends('app')
 
 @section('additionalCss')
+    <link href="{{ URL::to('/') }}/wulfdist/css/wulf.tabpane.min.css" rel="stylesheet"/>
     <style type="text/css">
 
     </style>
+    <script type="text/javascript">
+
+        function validateCourseWizardForm() {
+            var val = $('#rcourse_no').val();
+            if(val == '' || val == undefined || val.length < 3 ) {
+                alert("Please Enter a Valid Course Number.");
+                $('#rcourse_no').focus();
+                $('#rcourse_no').select();
+                return false;
+            } //end if
+            return true;
+        } //end validateCourseWizardForm
+
+    </script>
+
 @stop
 
 @section('content')
-    {!! Form::open(['action' => 'LoNumController@step2m', 'method' => 'post', 'id' => 'loNumForm', 'onsubmit' =>'return validateCourseWizardForm();', 'class' => 'form-horizontal']) !!}
+    {!! Form::open(['action' => 'LoNumController@step2m', 'method' => 'post', 'id' => 'frmCsodCourseWizardStep2m',
+                    'name' => 'frmCsodCourseWizardStep2m', 'onsubmit' => 'return validateCourseWizardForm();', 'class' => 'form-horizontal']) !!}
     <div class="row col-md-12">
         <div class="panel panel-blue-cap" style="max-width: 300px;">
             <div class="panel-heading" style="padding-top: 4px; padding-bottom: 1px; padding-left: 2px; padding-right: 2px; background-image: linear-gradient(to bottom, #fff 0px, #e5e5e5 100%);  min-height: 30px; max-height: 30px;">
@@ -21,6 +38,19 @@
             <div class="panel-shadow-description" style="max-width: 400px;">
                 Instructions:
                 <div class="instructionblock">
+                    <div class="n-dlg-wizard in" role="dialog" id="myWizardDialog" aria-labelledby="myModalDlgLabel-subhead" aria-hidden="true" tabindex="-1" style="display: block; padding-right: 17px;">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <ul class="nav nav-pills">
+                                    <li class="passed" style="width: calc(25% - 13.3333px);"><a href="#" data-toggle="tab" aria-expanded="false"><span>1</span></a></li>
+                                    <li class="active" style="width: calc(25% - 13.3333px);" class=""><a href="#" data-toggle="tab" aria-expanded="true"><span>2</span></a></li>
+                                    <li style="width: calc(25% - 13.3333px);" class=""><a href="#" data-toggle="tab" aria-expanded="false"><span>3</span></a></li>
+                                    <li style="width: calc(25% - 13.3333px);" class=""><a href="#" data-toggle="tab" aria-expanded="false"><span>4</span></a></li>
+                                    <li class=""><a href="#" data-toggle="tab" aria-expanded="false"><span>5</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     Please enter the LO/Course Number that you would like to request.  This LO/Course Number will be checked for validity and uniqueness.  It may already be taken and another LO/Course Number will have to be chosen.  Please click the 'Check Course Number Availability' button after entering the requested LO/Course Number. <br/><br/>
                 </div>
             </div>
@@ -77,13 +107,13 @@
                             <div class="row text-center">
                                 <span>
                                     @if($valid == true)
-                                        <button id="LoNumBtn4" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(4);" type="submit">Release &amp; Check Another LO/Course Number</button>
-                                        <button id="LoNumBtn3" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(3);" type="submit">Release &amp; Start Over</button>
-                                        <!-- <button id="LoNumBtn2" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(2);" type="submit">Release &amp; Use Course/LO Number Generator</button> -->
-                                        <button id="LoNumBtn1" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(1);" type="submit">Reserve &amp; Continue</button>
+                                        <button id="LoNumBtn4" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(4);" type="submit"><span class='icon icon-back'></span> Release &amp; Check Another LO/Course Number</button>
+                                        <button id="LoNumBtn3" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(3);" type="submit"><span class='icon icon-back'></span> Release &amp; Start Over</button>
+                                        <!-- <button id="LoNumBtn2" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(2);" type="submit"><span class='icon icon-back'></span> Release &amp; Use Course/LO Number Generator</button> -->
+                                        <button id="LoNumBtn1" class="btn btn-defaultBlue btn-standard" onclick="$('input[id=act]').val(1);" type="submit">Reserve &amp; Continue <span class='icon icon-next'></span></button>
                                     @else
-                                        <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick="history.go(-1);">Prev</button> &nbsp;
-                                        <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Check LO/Course Number Availability</button>
+                                        <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick="history.go(-1);"><span class='icon icon-back'></span> Prev</button> &nbsp;
+                                        <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Check LO/Course Number Availability <span class='icon icon-next'></span></button>
                                     @endif
                                 </span>
                             </div>
@@ -91,7 +121,7 @@
                             <div class="row">&nbsp;</div>
                             <div class="row">
                                 @if(trim($msg) !== '')
-                                    <div class="alert center-block">
+                                    <div class="alert center-block" style="margin-left: 20px; margin-right: 20px;">
                                         <span class="icon icon-info"></span>{{ $msg }}
                                     </div>
                                 @endif
@@ -122,17 +152,6 @@
                 $('#rcourse_no').select();
             } //end if
         });
-
-        function validateCourseWizardForm() {
-            var val = $('#rcourse_no').val();
-            if(val == '' || val == undefined || val.length < 3 ) {
-                alert("Please Enter a Valid Course Number.");
-                $('#rcourse_no').focus();
-                $('#rcourse_no').select();
-                return false;
-            } //end if
-            return true;
-        } //end validateCourseWizardForm
 
     </script>
 @stop

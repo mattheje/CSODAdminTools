@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button id="srchUserBtn" class="btn btn-defaultBlue btn-standard center-block" type="submit">Search For User</button>
+                            <button id="srchUserBtn" class="btn btn-defaultBlue btn-standard center-block" type="submit"><span class="icon icon-search"></span> Search For User</button>
                             @if(trim($msg) !== '')
                             <div class="alert center-block">
                                 <span class="icon icon-info"></span>{{ $msg }}
@@ -176,13 +176,13 @@
                 output += '<td>'+ user.status +'</td>';
                 output += '<td>'+ user.permissions +'</td>';
                 if(user.id == undefined || user.id == null || user.id <= 0) {
-                    output += '<td colspan="2" NOWRAP><a href="javascript:void(0);" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.username +'\';document.getElementById(\'userAction\').value=\'I\';document.forms[0].submit();">Import User</a></td>';
+                    output += '<td></td><td NOWRAP><button type="button" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.username +'\';document.getElementById(\'userAction\').value=\'I\';document.forms[0].submit();" class="btn btn-small" title="Import User"><span class="icon icon-add"></span>&nbsp;Import&nbsp;User</button></td>';
                 } else if(user.id > 0 && user.status == 1) {
                     detailRow = true;
-                    output += '<td class="n-drillDown-item" data-target-selector="#userdetailitem_'+ user.id +'" NOWRAP><a href="javascript:void(0);" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userAction\').value = \'E\';">Edit</a> &nbsp;</td>';
-                    output += '<td NOWRAP><a id="TA-dialog-confirmation" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userAction\').value = \'D\';" href="#ConfirmationDialogDeactivate" data-backdrop="false" data-toggle="modal" data-keyboard="true">De-Activate</a></td>';
+                    output += '<td class="n-drillDown-item" data-target-selector="#userdetailitem_'+ user.id +'" NOWRAP><button type="button" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userAction\').value = \'E\';" class="btn btn-small" title="Edit"><span class="icon icon-dropdown-menu" style="font-weight: 500; vertical-align: bottom;">&nbsp;Edit</span></button>&nbsp;</td>';
+                    output += '<td NOWRAP><button type="button" id="TA-dialog-confirmation" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userAction\').value = \'D\';" data-target="#ConfirmationDialogDeactivate" data-backdrop="false" data-toggle="modal" data-keyboard="true" class="btn btn-small" title="De-Activate"><span class="icon icon-delete-irreversible"></span>&nbsp;De-Activate</button></td>';
                 } else {
-                    output += '<td colspan="2" NOWRAP><a id="TA-dialog-confirmation" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userAction\').value = \'R\';" href="#ConfirmationDialogReactivate" data-backdrop="false" data-toggle="modal" data-keyboard="true">Re-Activate</a></td>';
+                    output += '<td></td><td NOWRAP><button type="button" id="TA-dialog-confirmation" onclick="document.getElementById(\'userActionUserID\').value=\''+ user.id +'\';document.getElementById(\'userAction\').value = \'R\';" data-target="#ConfirmationDialogReactivate" data-backdrop="false" data-toggle="modal" data-keyboard="true" class="btn btn-small" title="Re-Activate"><span class="icon icon-add"></span>&nbsp;Re-Activate</button></td>';
                 } //end if
 
                 output += '</tr>';
@@ -225,7 +225,7 @@
             output += '<th>Country:</th>';
             output += '<th>Status:</th>';
             output += '<th>Permissions:</th>';
-            output += '<th colspan=2">Actions:</th>';
+            output += '<th colspan=2" align="center" NOWRAP>Actions:</th>';
             output += '</tr>';
             output += '</thead>';
             output += '<tbody>';

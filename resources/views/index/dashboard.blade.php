@@ -32,7 +32,7 @@
                 Instructions:
                 <div class="instructionblock">
                     This tool is used to generate/reserve LO/Course Numbers for CSOD.  Please either click the 'Create New LO Number' button or search for a learning object number using course number or title.  You can also browse through the tables listed below to locate an existing learning object number.<br /><br />
-                    <button id="newLoNumBtn" onclick="window.location='{{ URL::action('LoNumController@step1', []) }}';" class="btn btn-defaultBlue btn-standard center-block" type="button">Create New LO Number</button><br />
+                    <button id="newLoNumBtn" onclick="window.location='{{ URL::action('LoNumController@step1', []) }}';" class="btn btn-defaultBlue btn-standard center-block" type="button"><span class="icon icon-add"></span> Create New LO Number</button><br />
                 </div>
             </div>
         </div>
@@ -49,12 +49,12 @@
                                     {!! Form::text('crsnum', $crsnum, ['id' => 'crsnum', 'class' => 'n-inputfield n-inputfield-small', 'size' => '20', 'placeholder' => 'LO Number or Title']) !!}
                                 </div>
                                 <div class="col-md-6">
-                                    <button id="srchLoNumBtn" class="btn btn-defaultBlue btn-standard" type="button" onclick="updateDashboardSearchResults($('#crsnum').val());">Search</button>
+                                    <button id="srchLoNumBtn" class="btn btn-defaultBlue btn-standard" type="button" onclick="updateDashboardSearchResults($('#crsnum').val());"><span class="icon icon-search"></span> Search</button>
                                 </div>
                             </div>
                             <div class="row">
                                 @if(trim($msg) !== '')
-                                    <div class="alert center-block">
+                                    <div class="alert center-block" style="margin-left: 20px; margin-right: 20px;">
                                         <span class="icon icon-info"></span>{{ $msg }}
                                     </div>
                                 @endif
@@ -192,9 +192,9 @@
                 output += '<td valign="middle" NOWRAP>';
                 output += '<span id="spanselectbtn'+rowsOutput+'">';
                 if(row.step == 4) {
-                    output += '<input type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/E/id/'+encodeURIComponent(row.id)+'\';" value="Continue" />';
+                    output += '<button type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/E/id/'+encodeURIComponent(row.id)+'\';" class="btn btn-small" title="Continue"><span class="icon icon-edit"></span> Continue</button>&nbsp;';
                 } //end if
-                output += '<input type="button" id="selectbtn_2_'+rowsOutput+'" onclick="document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value=\'R\';" href="#ConfirmationDialogRelease" data-backdrop="false" data-toggle="modal" data-keyboard="true" value="Release" /></span>';
+                output += '<button type="button" id="selectbtn_2_'+rowsOutput+'" onclick="document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value=\'R\';" data-toggle="modal" data-backdrop="false" data-keyboard="true" data-target="#ConfirmationDialogRelease" class="btn btn-small" title="Release"><span class="icon icon-delete"></span> Release</button></span>';
                 output += '</td>';
                 output += '</tr>';
                 rowsOutput++;
@@ -274,7 +274,7 @@
                 output += '<td>' + ((row.course_title === null) ? '' : row.course_title) + '</td>';
                 output += '<td valign="middle" NOWRAP>';
                 output += '<span id="spanselectbtn'+rowsOutput+'">';
-                output += '<input type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/V/method/M/id/'+encodeURIComponent(row.id)+'\';" value="View" /></span>';
+                output += '<button type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/V/method/M/id/'+encodeURIComponent(row.id)+'\';" class="btn btn-small" title="View"><span class="icon icon-more-vert"></span> View</button></span>';
                 output += '</td>';
                 output += '</tr>';
                 rowsOutput++;
@@ -356,9 +356,9 @@
                 output += '<td valign="middle" NOWRAP>';
                 output += '<span id="spanselectbtn'+rowsOutput+'">';
                 if(row.step == 4) {
-                    output += '<input type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/E/id/'+encodeURIComponent(row.id)+'\';" value="Continue" />';
+                    output += '<button type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/E/id/'+encodeURIComponent(row.id)+'\';" class="btn btn-small" title="Continue"><span class="icon icon-edit"></span> Continue</button>&nbsp;';
                 } //end if
-                output += '<input type="button" id="selectbtn_2_'+rowsOutput+'" onclick="document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value=\'R\';" href="#ConfirmationDialogRelease" data-backdrop="false" data-toggle="modal" data-keyboard="true" value="Release" /></span>';
+                output += '<button type="button" id="selectbtn_2_'+rowsOutput+'" onclick="document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value=\'R\';" data-toggle="modal" data-backdrop="false" data-keyboard="true" data-target="#ConfirmationDialogRelease" class="btn btn-small" title="Release"><span class="icon icon-delete"></span> Release</button></span>';
                 output += '</td>';
                 output += '</tr>';
                 rowsOutput++;
