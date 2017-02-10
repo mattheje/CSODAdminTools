@@ -189,7 +189,7 @@
         </div>
         <hr style="width: 100%; margin-top: -21px; margin-bottom: 5px;" />
     </div>
-    <div id="searchcnform">
+    <div id="searchcnform" style="display: @if(trim($course_no_selected) != '') none @else inline @endif;">
         <div class="row col-md-12">
             <div class="col-md-3 col-md-push-9" style="padding-left: 1px;">
                 <div class="panel-shadow-description" style="max-width: 400px;">
@@ -260,7 +260,7 @@
         </div>
     </div>
 
-    <div id="selectnewversionno" style="display: none">
+    <div id="selectnewversionno" style="display: @if(trim($course_no_selected) != '') inline @else none @endif;">
         <div class="row col-md-12">
             <div class="col-md-3 col-md-push-9" style="padding-left: 1px;">
                 <div class="panel-shadow-description" style="max-width: 400px;">
@@ -392,7 +392,12 @@
             if(val != '' && val != undefined && val.length >= 3) {
                 $('#searchcnform').hide();
                 $('#selectnewversionno').show();
-            } //end if
+            } else {
+                if($('input[id=version_requested]').length && $('input[id=version_requested]').val() != '') {
+                    showCourseNumberLookupTableByFilters($('#scourse_no').val(), 0, 'courseslisttable');
+                    $('input[id=version_requested]').val('');
+                } //end if
+            }//end if
         });
 
     </script>

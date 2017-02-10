@@ -64,7 +64,7 @@
                                 <div class="col-sm-8">
                                     <div class="radio">
                                         {{ Form::radio('method', 'N', ($method == 'N'), ['id'=> 'methodN', 'class'=>'n-radio-btn']) }}
-                                        <label id="TA_form_Optionselection" for="methodN" style="text-wrap: none;">A New Course Using The Course Number Generator</label>
+                                        <label id="TA_form_Optionselection" for="methodN" style="text-wrap: none;">A New LO/Course Using The Course Number Generator</label>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                 <div class="col-sm-8">
                                     <div class="radio">
                                         {{ Form::radio('method', 'M', ($method == 'M'), ['id'=> 'methodM', 'class'=>'n-radio-btn']) }}
-                                        <label id="TA_form_Optionselection" for="methodM" style="text-wrap: none;">A New Course Using Manual Course Number Input</label>
+                                        <label id="TA_form_Optionselection" for="methodM" style="text-wrap: none;">A New LO/Course Using Manual Course Number Input</label>
                                     </div>
                                 </div>
                             </div>
@@ -82,14 +82,14 @@
                                 <div class="col-sm-8">
                                     <div class="radio">
                                         {{ Form::radio('method', 'V', ($method == 'V'), ['id'=> 'methodV', 'class'=>'n-radio-btn']) }}
-                                        <label id="TA_form_Optionselection" for="methodV" style="text-wrap: none;">A New Version of an Existing Course Number</label>
+                                        <label id="TA_form_Optionselection" for="methodV" style="text-wrap: none;">A New Version of an Existing LO/Course Number</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">&nbsp;</div>
                             <div class="row text-center">
                                 <span>
-                                    <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick=""><span class='icon icon-back'></span> Back</button> &nbsp;
+                                    <button id="Cancel" class="btn btn-defaultBlue btn-standard" type="button" onclick="history.go(-1);"><span class='icon icon-back'></span> Back</button> &nbsp;
                                     <button id="LoNumBtn" class="btn btn-defaultBlue btn-standard" type="submit">Next <span class='icon icon-next'></span></button>
                                 </span>
                             </div>
