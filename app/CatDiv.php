@@ -11,8 +11,8 @@ class CatDiv extends Model
         return DB::table('lng_lonum_catdiv')->orderBy('division_name', 'asc')->orderBy('id', 'desc')->get();
     } //end getAllCatDivs
 
-    public function getVatDivById($id) {
-        return DB::table('lng_lonum_catdiv')->where('id', $id)->orderBy('division_name', 'asc')->orderBy('id', 'desc')->get();
+    public function getCatDivById($id) {
+        return DB::table('lng_lonum_catdiv')->where('id', $id)->orderBy('code', 'desc')->orderBy('id', 'desc')->first();
     } //end getVatDivById
 
 } //end class

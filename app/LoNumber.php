@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\CatDiv;
 
 class LoNumber extends Model
 {
@@ -391,5 +392,76 @@ ENDSQLTEXT;
         $sth->execute([$course_no,$version,$course_no,$version,$course_no,$version,$course_no,$version,$owner_id]);
         return $sth->fetchAll();
     } //end checkNewVersionNumber
+
+    public function getNextAvailableNewCourseNo($type, $delv_type, $catdiv_id, $userid, $username, $method='N', $version='1.0', $excld=array(), &$id) {
+        $course_no = null;
+        $catDivModel = new CatDiv();
+        $catdiv = $catDivModel->getCatDivById($catdiv_id);
+        if(!isset($catdiv->code) || !(strlen(trim($catdiv->code)) > 1) || !($catdiv->start_number >= 0) ) return null;
+
+        $allSimilarCourses = $this->getAllUsedLmsCourseNumbers($catdiv->code, 'T');
+        $coursesinfo = array();
+        foreach($allSimilarCourses as $similarCourse) {
+            $match=$crsnumbase=null;
+            if(preg_match('~[a-z\-\_]~i', $similarCourse['course_no'], $match, PREG_OFFSET_CAPTURE, 3)) {
+                $crsnumbase = is_array($match) ? substr($similarCourse['course_no'],0,$match[0][1]) : $similarCourse['course_no'];
+            } else {
+                $crsnumbase = $similarCourse['course_no'];
+            } //end if
+            $coursesinfo[$crsnumbase]=$similarCourse;
+        } //end foreach
+
+        $uniquekeys = array_keys($coursesinfo);
+
+        for($i=$catdiv->start_number; $i <= 99999; $i++) {
+            $crsnumbase = 'T' . trim(strtoupper($catdiv->code)) . str_pad($i, 5, '0', STR_PAD_LEFT);
+            if(in_array($crsnumbase, $uniquekeys) || in_array($crsnumbase . trim(strtoupper($delv_type)), $excld))
+                continue;
+            $course_no = $crsnumbase . trim(strtoupper($delv_type));
+            break;
+        } //end for
+
+        if(!is_null($course_no))
+            $id=$this->lockLmsCourseNo(3, $course_no, $type, $delv_type, $catdiv_id, $userid, $username, $method, $version);
+
+        return $course_no;
+    } //end getNextAvailableNewCourseNo
+
+    public function getAllUsedLmsCourseNumbers($code, $prefix='T') {
+        $this->unLockLmsCourseNumbers();
+        $likestr = trim(strtoupper($prefix)) . trim(strtoupper($code)) . '%';
+        $sql = <<<ENDSQLTXT
+        SELECT    TRIM(UPPER(g.course_no_raw)) AS course_no,
+                  IFNULL(NULLIF(TRIM(UPPER(g.`version`)),''),'1.0') AS version,
+                  CONCAT(u.fname,' ',u.lname) AS owner,
+                  IFNULL(g.inserted_on,'Unknown') AS cdate
+        FROM      `lng_lonum` g
+        LEFT JOIN `lng_users` u
+        ON        (g.owner_id=u.id)
+        WHERE     NULLIF(TRIM(g.course_no_raw),'') IS NOT NULL
+        AND       g.course_no_raw LIKE ?
+        UNION
+        SELECT    SUBSTRING_INDEX(UPPER(TRIM(lmsc.course_no)),'_V',1) AS course_no,
+                  IFNULL(NULLIF(TRIM(UPPER(lmsc.`version`)),''),'1.0') AS version,
+                  IFNULL(lmsc.lms_created_by,lmsc.lms_updated_by) AS owner,
+                  IFNULL(lmsc.lms_updated_on,'Unknown') AS cdate
+        FROM      `lms_los` lmsc
+        WHERE     NULLIF(TRIM(lmsc.course_no),'') IS NOT NULL
+        AND       SUBSTRING_INDEX(UPPER(TRIM(lmsc.course_no)),'_V',1) LIKE ?
+        UNION
+        SELECT    r.course_no,
+                  IFNULL(NULLIF(TRIM(UPPER(r.`version`)),''),'1.0') AS version,
+                  r.owner,
+                  IFNULL(r.inserted_on,'Unknown') AS cdate
+        FROM      `lng_lonum_resv` r
+        WHERE     r.course_no IS NOT NULL
+        AND       r.course_no LIKE ?
+        ORDER BY  course_no ASC, INET_ATON(SUBSTRING_INDEX(CONCAT(version,'.0.0.0'),'.',4)) ASC, cdate ASC
+ENDSQLTXT;
+        $db = DB::connection()->getPdo();
+        $sth = $db->prepare($sql);
+        $sth->execute([$likestr,$likestr,$likestr]);
+        return $sth->fetchAll();
+    } //end getAllUsedLmsCourseNumbers
 
 } //end class

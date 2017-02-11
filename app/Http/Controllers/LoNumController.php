@@ -124,7 +124,74 @@ class LoNumController extends Controller
     } //end step3n
 
     public function step4n(Request $request) {
-        die('step4n');
+        $owner_id = $this->userId = LoginCheck::isLoggedIn($request);
+        $msg = trim($request->input('msg'));
+        $error = $request->input('error');
+        $succmsg = $request->input('succmsg');
+        $type = $request->input('type');
+        $delv_type = $request->input('delv_type');
+        $catdiv_id = $request->input('catdiv_id');
+        $act = $request->input('act');
+        $id = $request->input('id');
+        $course_no = $request->input('course_no',null);
+        $course_no_raw = $request->input('course_no_raw',null);
+        $version = $request->input('version','1.0');
+        $excld = $request->input('excld');
+        if(!is_array($excld) && trim($excld) != '') $excld = array($excld);
+        if(!is_array($excld)) $excld = array();
+        $method = trim($request->input('method','N'));
+        $go = $request->input('go',0);
+        $loNumModel = new LoNumber();
+
+        if(isset($id) && $id > 0) {
+            $cdata = $loNumModel->getLmsCourseGenDataById($id);
+            if(isset($cdata['id']) && $cdata['id'] > 0) { //reset input with what is in the DB
+                $version = trim(strtoupper($cdata['version']));
+                $course_no = trim(strtoupper($cdata['course_no']));
+                $course_no_raw = trim(strtoupper($cdata['course_no_raw']));
+                $catdiv_id = $cdata['catdiv_id'];
+                $delv_type = $cdata['delv_type'];
+                $type = $cdata['type'];
+                $id = $cdata['id'];
+            } //end if
+        } //end if
+
+        if(!($catdiv_id > 0)) {
+            $response = redirect()->route('step3n',['id'=>$id, 'type'=>$type, 'delv_type'=>$delv_type, 'catdiv_id'=>$catdiv_id, 'method'=>$method, 'msg'=>$msg, 'excld'=>$excld]);
+            $response->send();
+            exit;
+        } //end if
+
+        if($go == 1 && trim($course_no) != '' && trim($course_no_raw) != '' && trim($version) != '' && $act > 0 && $id > 0) {
+            if($act == 1) { //save and continue
+                $loNumModel->updateLmsCourseCreationStep($id, 4, $owner_id, $request->session()->get('username'));
+                $response = redirect()->route('step5',['id'=>$id, 'type'=>$type, 'delv_type'=>$delv_type, 'catdiv_id'=>$catdiv_id, 'method'=>$method, 'msg'=>'Course/LO Number Saved', 'excld'=>$excld]);
+                $response->send();
+                exit;
+            } elseif($act == 2) { //release and try again using same tool, but next number
+                $loNumModel->unLockLmsLoNumber($id);
+                (is_array($excld)) ? $excld[]=trim($course_no_raw) : $excld=array($course_no_raw);
+                $response = redirect()->route('step4n',['id'=>$id, 'type'=>$type, 'delv_type'=>$delv_type, 'catdiv_id'=>$catdiv_id, 'method'=>$method, 'msg'=>'Course/LO Number Released', 'excld'=>$excld]);
+                $response->send();
+                exit;
+            } elseif($act == 3) { //release and try again using manual override
+                $loNumModel->unLockLmsLoNumber($id);
+                $response = redirect()->route('step2m',['method'=>'M', 'msg'=>'Course/LO Number Released']);
+                $response->send();
+                exit;
+            } else { //release and start over
+                $loNumModel->unLockLmsLoNumber($id);
+                $response = redirect()->route('step1',['msg'=>'Course/LO Number Released']);
+                $response->send();
+                exit;
+            } //end if
+        } elseif (is_null($course_no)) {
+            $course_no_raw = $loNumModel->getNextAvailableNewCourseNo($type, $delv_type, $catdiv_id, $owner_id, $request->session()->get('username'), 'N', '1.0', $excld, $id); //id passed by reference
+            $version = '1.0';
+            $course_no = strtoupper(trim($course_no_raw)) . '_V' . $version;
+        }//end if
+
+        return view('lonum.step4n', compact('msg', 'id', 'method', 'go', 'type', 'catdivs', 'delv_type', 'catdiv_id', 'version', 'course_no', 'course_no_raw', 'excld', 'owner_id', 'error', 'succmsg'));
     } //end step4n
 
 
@@ -299,7 +366,7 @@ class LoNumController extends Controller
     } //end step2v
 
     public function step5(Request $request) {
-        $this->userId = LoginCheck::isLoggedIn($request);
+        $owner_id = $this->userId = LoginCheck::isLoggedIn($request);
 
 
         echo "Step 5 Starts Here";
