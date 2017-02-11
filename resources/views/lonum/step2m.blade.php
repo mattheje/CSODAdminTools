@@ -51,7 +51,7 @@
                             </div>
                         </div>
                     </div>
-                    Please enter the LO/Course Number that you would like to request.  This LO/Course Number will be checked for validity and uniqueness.  It may already be taken and another LO/Course Number will have to be chosen.  Please click the 'Check Course Number Availability' button after entering the requested LO/Course Number. <br/><br/>
+                    <br />Please enter the LO/Course Number that you would like to request.  This LO/Course Number will be checked for validity and uniqueness.  It may already be taken and another LO/Course Number will have to be chosen.  Please click the 'Check Course Number Availability' button after entering the requested LO/Course Number. <br/><br/>
                 </div>
             </div>
         </div>

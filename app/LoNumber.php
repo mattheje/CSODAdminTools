@@ -464,4 +464,8 @@ ENDSQLTXT;
         return $sth->fetchAll();
     } //end getAllUsedLmsCourseNumbers
 
+    public function saveLmsCourseData($loId, $updateAry=array()) {
+        return DB::table('lng_lonum')->where('id', $loId)->update($updateAry);
+    } //end saveLmsCourseData
+
 } //end class

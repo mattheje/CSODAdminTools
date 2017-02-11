@@ -47,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                    This wizard will guide you through new course number and data creation for CSOD<br/><br/>Please select how you would like to create a new course:<br/><br/>
+                    <br />This wizard will guide you through new course number and data creation for CSOD<br/><br/>Please select how you would like to create a new course:<br/><br/>
                 </div>
             </div>
         </div>

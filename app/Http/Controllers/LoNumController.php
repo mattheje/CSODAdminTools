@@ -367,10 +367,63 @@ class LoNumController extends Controller
 
     public function step5(Request $request) {
         $owner_id = $this->userId = LoginCheck::isLoggedIn($request);
+        $msg = trim($request->input('msg'));
+        $error = $request->input('error');
+        $succmsg = $request->input('succmsg');
+        $method = trim($request->input('method'));
+        $act = $request->input('act','E');
+        $id = $request->input('id');
+        $go = $request->input('go',0);
+        $complete = false;
+        $loNumModel = new LoNumber();
+        $catDivModel = new CatDiv();
 
 
-        echo "Step 5 Starts Here";
-        die();
+        if(!(isset($id) && $id > 0)) { //We have to have a valid ID by now, or start over
+            $response = redirect()->route('step1',['method'=>$method, 'msg'=>'Invalid Parameters, Starting Over...']);
+            $response->send();
+            exit;
+        } //end if
+
+        $cdata = $loNumModel->getLmsCourseGenDataById($id);
+        $catdivs = $catDivModel->getAllCatDivs();
+        if(!(isset($cdata['id']) && $cdata['id'] > 0)) { //invalid id, start over
+            $response = redirect()->route('step1',['method'=>$method, 'msg'=>'Could Not Find ID in Database, Starting Over...']);
+            $response->send();
+            exit;
+        } //end if
+
+        if($act=='E' && $go=='1' && $id > 0) { //read in values from submitted form and update database
+            $method = $request->input('method');
+            $type = $request->input('type');
+            $delv_type = $request->input('delv_type');
+            $catdiv_id = $request->input('catdiv_id');
+            $course_no = $request->input('course_no');
+            $course_title = $course_no . ': ' . trim(preg_replace('/' . $course_no . '\s*:\s*' . '/i', '', trim($request->input('course_title')), 1));
+            $product_relnum = $request->input('product_relnum');
+            $course_duration = $request->input('course_duration');
+            $course_level = $request->input('course_level','N');
+            $available = $request->input('available','N');
+            $update_data = array('step' => 5,
+                'type' => (stripos('WTEASKDM',$delv_type) !== false && stripos('WTEASKDM',$delv_type) >= 0) ? 'P' : 'C',
+                'delv_type' => trim(strtoupper($delv_type)),
+                'catdiv_id' => trim($catdiv_id),
+                'owner_id' => $owner_id,
+                'course_title' => $course_title,
+                'product_relnum' => trim($product_relnum),
+                'course_duration' => $course_duration,
+                'course_level' => trim($course_level),
+                'available' => trim($available),
+                'updated_by' => $request->session()->get('username'));
+            $act = 'E';
+            $loNumModel->saveLmsCourseData($id, $update_data);
+            $complete = true;
+        } //end if
+
+
+
+        return view('lonum.step5', array_merge(compact('msg', 'id', 'method', 'act', 'go', 'error', 'succmsg', 'catdivs', 'complete'),$cdata));
+
     } //end step5
 
 } //end class

@@ -208,7 +208,7 @@
                                 </div>
                             </div>
                         </div>
-                        Please search for the existing LO/Course Number of the LO/Course you would like to create a new version for.  Please click the &apos;Search LO/Course&apos; button to look-up the existing course, and then select the existing course and enter the new version number.
+                        <br />Please search for the existing LO/Course Number of the LO/Course you would like to create a new version for.  Please click the &apos;Search LO/Course&apos; button to look-up the existing course, and then select the existing course and enter the new version number.
                     </div>
                 </div>
             </div>
