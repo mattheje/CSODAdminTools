@@ -66,22 +66,40 @@
             </div>
         </div>
     </div>
-    <div class="row col-md-12">
-        <h2>My In-Progress/Reserved LO Numbers:</h2>
-        <div id="myReservedCoursesTableDiv"><span class="icon icon-spinner icon-spinner-large"></span></div>
-        <hr style="width: 100%;">
-    </div>
+    @if(trim($type) == 'O')
+        <div class="row col-md-12">
+            <h2>Other Users' In-Progress/Reserved LO Numbers:</h2>
+            <div id="otherReservedCoursesTableDiv"><span class="icon icon-spinner icon-spinner-large"></span></div>
+        </div>
+    @elseif(trim($type) == 'M')
+        <div class="row col-md-12">
+            <h2>My In-Progress/Reserved LO Numbers:</h2>
+            <div id="myReservedCoursesTableDiv"><span class="icon icon-spinner icon-spinner-large"></span></div>
+            <hr style="width: 100%;">
+        </div>
 
-    <div class="row col-md-12">
-        <h2>My Published LO Numbers in CSOD:</h2>
-        <div id="myPublishedCoursesTableDiv"><span class="icon icon-spinner icon-spinner-large"></span></div>
-        <hr style="width: 100%;">
-    </div>
+        <div class="row col-md-12">
+            <h2>My Published LO Numbers in CSOD:</h2>
+            <div id="myPublishedCoursesTableDiv"><span class="icon icon-spinner icon-spinner-large"></span></div>
+        </div>
+    @else
+        <div class="row col-md-12">
+            <h2>My In-Progress/Reserved LO Numbers:</h2>
+            <div id="myReservedCoursesTableDiv"><span class="icon icon-spinner icon-spinner-large"></span></div>
+            <hr style="width: 100%;">
+        </div>
 
-    <div class="row col-md-12">
-        <h2>Other Users' In-Progress/Reserved LO Numbers:</h2>
-        <div id="otherReservedCoursesTableDiv"><span class="icon icon-spinner icon-spinner-large"></span></div>
-    </div>
+        <div class="row col-md-12">
+            <h2>My Published LO Numbers in CSOD:</h2>
+            <div id="myPublishedCoursesTableDiv"><span class="icon icon-spinner icon-spinner-large"></span></div>
+            <hr style="width: 100%;">
+        </div>
+
+        <div class="row col-md-12">
+            <h2>Other Users' In-Progress/Reserved LO Numbers:</h2>
+            <div id="otherReservedCoursesTableDiv"><span class="icon icon-spinner icon-spinner-large"></span></div>
+        </div>
+    @endif
 
     <div class="modal" id="ConfirmationDialogRelease" role="dialog" aria-labelledby="myModalDlgLabel-confirm" aria-hidden="true" tabindex="1" style="display: none;">
         <div class="modal-dialog n-dialog-confirm">
@@ -127,9 +145,16 @@
         });
 
         function updateDashboardSearchResults(crsnum) {
-            showMyReservedLOs(crsnum, 0, 'myReservedCoursesTableDiv');
-            showMyPublishedLOs(crsnum, 0, 'myPublishedCoursesTableDiv');
-            showOtherReservedLOs(crsnum, 0, 'otherReservedCoursesTableDiv');
+            @if(trim($type) == 'O')
+                showOtherReservedLOs(crsnum, 0, 'otherReservedCoursesTableDiv');
+            @elseif(trim($type) == 'M')
+                showMyReservedLOs(crsnum, 0, 'myReservedCoursesTableDiv');
+                showMyPublishedLOs(crsnum, 0, 'myPublishedCoursesTableDiv');
+            @else
+                showMyReservedLOs(crsnum, 0, 'myReservedCoursesTableDiv');
+                showMyPublishedLOs(crsnum, 0, 'myPublishedCoursesTableDiv');
+                showOtherReservedLOs(crsnum, 0, 'otherReservedCoursesTableDiv');
+            @endif
         } //end if updateDashboardSearchResults
 
         var tableRowsPerPage = 5;

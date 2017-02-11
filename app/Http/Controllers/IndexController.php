@@ -27,7 +27,7 @@ class IndexController extends Controller
         return view('index.menu', []);
     } //end menu function
 
-    public function dashboard(Request $request) {
+    public function dashboard(Request $request, $type = null) {
         $this->userId = LoginCheck::isLoggedIn($request);
 
         $crsnum = trim($request->input('crsnum'));
@@ -41,7 +41,11 @@ class IndexController extends Controller
             $msg = "LO/Course Number Successfully Released!";
         } //end if
 
-        return view('index.dashboard', compact('crsnum', 'msg'));
+        return view('index.dashboard', compact('crsnum', 'msg', 'type'));
     } //end dashboard function
+
+    public function construction() {
+        return view('index.construction', []);
+    } //end construction
 
 } //end class IndexController

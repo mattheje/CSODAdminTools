@@ -123,6 +123,11 @@ class LoNumController extends Controller
         return view('lonum.step3n', compact('msg', 'id', 'method', 'go', 'type', 'catdivs', 'delv_type', 'catdiv_id', 'owner_id', 'error', 'succmsg'));
     } //end step3n
 
+    public function step4n(Request $request) {
+        die('step4n');
+    } //end step4n
+
+
     public function step2m(Request $request) {
         $owner_id = $this->userId = LoginCheck::isLoggedIn($request);
         $error = trim($request->input('error'));
