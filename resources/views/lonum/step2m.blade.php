@@ -66,7 +66,7 @@
                             <div class="row">
                                 <label class="col-md-4 control-label-sm text-left" style="text-align: right; white-space: nowrap;">Requested LO/Course Number:</label>
                                 <div class="col-md-8 input-required">
-                                    {!! Form::text('rcourse_no', $rcourse_no, ['id'=>'rcourse_no', 'size'=>'20', 'style'=>'text-transform: uppercase', 'class' => 'form-control n-inputfield n-inputfield-small']) !!}
+                                    {!! Form::text('rcourse_no', $rcourse_no, ['id'=>'rcourse_no', 'size'=>'20', 'maxlength'=>250, 'style'=>'text-transform: uppercase', 'class' => 'form-control n-inputfield n-inputfield-small']) !!}
                                     <a class="form-control-feedback form-control-feedback-small"><span class="icon icon-mandatory"></span></a>
                                 </div>
                             </div>

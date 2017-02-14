@@ -125,7 +125,7 @@
                             <div class="row">
                                 <label class="col-md-4 control-label-sm text-left" style="text-align: right; white-space: nowrap;">LO/Course Title:</label>
                                 <div class="col-md-8 input-required">
-                                    {!! Form::text('course_title', $course_title, ['id'=>'course_title', 'class' => 'form-control n-inputfield n-inputfield-small', $disable_all]) !!}
+                                    {!! Form::text('course_title', $course_title, ['id'=>'course_title', 'maxlength'=>(500 - (strlen($course_no) + 3)), 'class' => 'form-control n-inputfield n-inputfield-small', $disable_all]) !!}
                                     <a class="form-control-feedback form-control-feedback-small"><span class="icon icon-mandatory"></span></a>(The CSOD LO/Course Number will be automatically added at the end of the course title with a pipe. Please omit here.)
                                 </div>
                             </div>

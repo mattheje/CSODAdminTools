@@ -27,7 +27,7 @@
     </style>
     <script type="text/javascript">
         if (top.location.href != self.location.href)
-            top.location.href = "{{ URL::action('LoginController@index', ['msg' => 'Session Timed Out', 'bburl' => $_SERVER['HTTP_REFERER']]) }}";
+            top.location.href = "{{ URL::action('LoginController@index', ['msg' => 'Session Timed Out']) }}";
     </script>
 </head>
 <body class="demo-body-content" style="background:transparent;">
@@ -105,7 +105,7 @@
 
     $(document).ready(function () {
         if (top.location.href != self.location.href)
-            top.location.href = "{{ URL::action('LoginController@index', ['msg' => 'Session Timed Out', 'bburl' => $_SERVER['HTTP_REFERER']]) }}";
+            top.location.href = "{{ URL::action('LoginController@index', ['msg' => 'Session Timed Out']) }}";
     });
 
 </script>
