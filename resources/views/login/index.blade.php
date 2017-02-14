@@ -27,7 +27,7 @@
     </style>
     <script type="text/javascript">
         if (top.location.href != self.location.href)
-            top.location.href = "{{ URL::action('LoginController@index', ['msg' => 'Session Timed Out']) }}";
+            top.location.href = "{{ URL::action('LoginController@index', ['msg' => 'Session Timed Out', 'bburl' => $_SERVER['HTTP_REFERER']]) }}";
     </script>
 </head>
 <body class="demo-body-content" style="background:transparent;">
@@ -70,12 +70,14 @@
                                     disabled="true">Log In
                             </button>
                         </div>
+                    {!! Form::hidden('go', '1', array('id' => 'go')) !!}
+                    {!! Form::hidden('bburl', $bburl, array('id' => 'bburl')) !!}
                     {!! Form::close() !!}
                 </div>
             </div>
-            @if(trim(Request::get('msg')) !== '')
+            @if(trim($msg) !== '')
             <div class="alert alert-error">
-                <span class="icon icon-error"></span>{{Request::get('msg')}}
+                <span class="icon icon-error"></span>{{ $msg }}
             </div>
             @endif
             @include('errors.list')
@@ -103,7 +105,7 @@
 
     $(document).ready(function () {
         if (top.location.href != self.location.href)
-            top.location.href = "{{ URL::action('LoginController@index', ['msg' => 'Session Timed Out']) }}";
+            top.location.href = "{{ URL::action('LoginController@index', ['msg' => 'Session Timed Out', 'bburl' => $_SERVER['HTTP_REFERER']]) }}";
     });
 
 </script>

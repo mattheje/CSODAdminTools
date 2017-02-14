@@ -32,7 +32,9 @@
                 Instructions:
                 <div class="instructionblock">
                     This tool is used to generate/reserve LO/Course Numbers for CSOD.  Please either click the 'Create New LO Number' button or search for a learning object number using course number or title.  You can also browse through the tables listed below to locate an existing learning object number.<br /><br />
-                    <button id="newLoNumBtn" onclick="window.location='{{ URL::action('LoNumController@step1', []) }}';" class="btn btn-defaultBlue btn-standard center-block" type="button"><span class="icon icon-add"></span> Create New LO Number</button><br />
+                    @if(in_array('lonumadminedit',Session::get('userpermissions')))
+                        <button id="newLoNumBtn" onclick="window.location='{{ URL::action('LoNumController@step1', []) }}';" class="btn btn-defaultBlue btn-standard center-block" type="button"><span class="icon icon-add"></span> Create New LO Number</button><br />
+                    @endif
                 </div>
             </div>
         </div>
@@ -216,10 +218,13 @@
                 output += '<td>' + ((row.course_title === null) ? '' : row.course_title) + '</td>';
                 output += '<td valign="middle" NOWRAP>';
                 output += '<span id="spanselectbtn'+rowsOutput+'">';
+                @if(in_array('lonumadminedit',Session::get('userpermissions')))
                 if(row.step == 4) {
-                    output += '<button type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/E/id/'+encodeURIComponent(row.id)+'\';" class="btn btn-small" title="Continue"><span class="icon icon-edit"></span> Continue</button>&nbsp;';
+                    output += '<button type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}?act=E&id='+encodeURIComponent(row.id)+'\';" class="btn btn-small" title="Continue"><span class="icon icon-edit"></span> Continue</button>&nbsp;';
                 } //end if
-                output += '<button type="button" id="selectbtn_2_'+rowsOutput+'" onclick="document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value=\'R\';" data-toggle="modal" data-backdrop="false" data-keyboard="true" data-target="#ConfirmationDialogRelease" class="btn btn-small" title="Release"><span class="icon icon-delete"></span> Release</button></span>';
+                output += '<button type="button" id="selectbtn_2_'+rowsOutput+'" onclick="document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value=\'R\';" data-toggle="modal" data-backdrop="false" data-keyboard="true" data-target="#ConfirmationDialogRelease" class="btn btn-small" title="Release"><span class="icon icon-delete"></span> Release</button>';
+                @endif
+                output += '</span>';
                 output += '</td>';
                 output += '</tr>';
                 rowsOutput++;
@@ -299,7 +304,10 @@
                 output += '<td>' + ((row.course_title === null) ? '' : row.course_title) + '</td>';
                 output += '<td valign="middle" NOWRAP>';
                 output += '<span id="spanselectbtn'+rowsOutput+'">';
-                output += '<button type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/V/method/M/id/'+encodeURIComponent(row.id)+'\';" class="btn btn-small" title="View"><span class="icon icon-more-vert"></span> View</button></span>';
+                @if(in_array('lonumadminedit',Session::get('userpermissions')))
+                output += '<button type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}?act=V&method=M&id='+encodeURIComponent(row.id)+'\';" class="btn btn-small" title="View"><span class="icon icon-more-vert"></span> View</button>';
+                @endif
+                output += '</span>';
                 output += '</td>';
                 output += '</tr>';
                 rowsOutput++;
@@ -380,10 +388,13 @@
                 output += '<td>' + ((row.course_title === null) ? '' : row.course_title) + '</td>';
                 output += '<td valign="middle" NOWRAP>';
                 output += '<span id="spanselectbtn'+rowsOutput+'">';
+                @if(in_array('lonumadminedit',Session::get('userpermissions')))
                 if(row.step == 4) {
-                    output += '<button type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}/act/E/id/'+encodeURIComponent(row.id)+'\';" class="btn btn-small" title="Continue"><span class="icon icon-edit"></span> Continue</button>&nbsp;';
+                    output += '<button type="button" id="selectbtn_1_'+rowsOutput+'" onclick="window.location=\'{{ URL::action('LoNumController@step5', []) }}?act=E&id=+'+encodeURIComponent(row.id)+'\';" class="btn btn-small" title="Continue"><span class="icon icon-edit"></span> Continue</button>&nbsp;';
                 } //end if
-                output += '<button type="button" id="selectbtn_2_'+rowsOutput+'" onclick="document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value=\'R\';" data-toggle="modal" data-backdrop="false" data-keyboard="true" data-target="#ConfirmationDialogRelease" class="btn btn-small" title="Release"><span class="icon icon-delete"></span> Release</button></span>';
+                output += '<button type="button" id="selectbtn_2_'+rowsOutput+'" onclick="document.getElementById(\'loId\').value=\''+ row.id +'\';document.getElementById(\'loAction\').value=\'R\';" data-toggle="modal" data-backdrop="false" data-keyboard="true" data-target="#ConfirmationDialogRelease" class="btn btn-small" title="Release"><span class="icon icon-delete"></span> Release</button>';
+                @endif
+                output += '</span>';
                 output += '</td>';
                 output += '</tr>';
                 rowsOutput++;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 use App\LoginCheck;
 use App\LoNumber;
 use App\CatDiv;
@@ -36,7 +37,7 @@ class LoNumController extends Controller
     } //end fetchOthersReservedLOs
 
     public function searchCourseDataForVersioning(Request $request) {
-        $this->userId = LoginCheck::isLoggedIn($request);
+        $this->userId = LoginCheck::isLoggedInHasPermissions($request,['lonumadminedit']);
         $lonum = trim($request->input('crsnum'));
         $loNumModel = new LoNumber();
         $rows = $loNumModel->searchLmsCourseDataRaw($lonum);
@@ -44,7 +45,7 @@ class LoNumController extends Controller
     } //end searchCourseDataForVersioning
 
     public function getNextCourseVersion(Request $request) {
-        $this->userId = LoginCheck::isLoggedIn($request);
+        $this->userId = LoginCheck::isLoggedInHasPermissions($request,['lonumadminedit']);
         $lonum = trim($request->input('crsnum'));
         $loNumModel = new LoNumber();
         $rows = $loNumModel->getNextCourseVersionNumber($lonum);
@@ -52,7 +53,7 @@ class LoNumController extends Controller
     } //end getNextCourseVersion
 
     public function step1(Request $request) {
-        $this->userId = LoginCheck::isLoggedIn($request);
+        $this->userId = LoginCheck::isLoggedInHasPermissions($request,['lonumadminedit']);
         $msg = trim($request->input('msg'));
         $id = $request->input('id');
         $method = trim($request->input('method','N'));
@@ -68,7 +69,7 @@ class LoNumController extends Controller
     } //end step1
 
     public function step2n(Request $request) {
-        $this->userId = LoginCheck::isLoggedIn($request);
+        $this->userId = LoginCheck::isLoggedInHasPermissions($request,['lonumadminedit']);
         $msg = trim($request->input('msg'));
         $id = $request->input('id');
         $method = trim($request->input('method','N'));
@@ -85,7 +86,7 @@ class LoNumController extends Controller
     } //end step2n
 
     public function step3n(Request $request) {
-        $owner_id = $this->userId = LoginCheck::isLoggedIn($request);
+        $owner_id = $this->userId = LoginCheck::isLoggedInHasPermissions($request,['lonumadminedit']);
         $msg = trim($request->input('msg'));
         $error = $request->input('error');
         $succmsg = $request->input('succmsg');
@@ -124,7 +125,7 @@ class LoNumController extends Controller
     } //end step3n
 
     public function step4n(Request $request) {
-        $owner_id = $this->userId = LoginCheck::isLoggedIn($request);
+        $owner_id = $this->userId = LoginCheck::isLoggedInHasPermissions($request,['lonumadminedit']);
         $msg = trim($request->input('msg'));
         $error = $request->input('error');
         $succmsg = $request->input('succmsg');
@@ -196,7 +197,7 @@ class LoNumController extends Controller
 
 
     public function step2m(Request $request) {
-        $owner_id = $this->userId = LoginCheck::isLoggedIn($request);
+        $owner_id = $this->userId = LoginCheck::isLoggedInHasPermissions($request,['lonumadminedit']);
         $error = trim($request->input('error'));
         $succmsg = trim($request->input('succmsg'));
         $msg = trim($request->input('msg'));
@@ -286,7 +287,7 @@ class LoNumController extends Controller
     } //end step2m
 
     public function step2v(Request $request) {
-        $owner_id = $this->userId = LoginCheck::isLoggedIn($request);
+        $owner_id = $this->userId = LoginCheck::isLoggedInHasPermissions($request,['lonumadminedit']);
         $error = trim($request->input('error'));
         $succmsg = trim($request->input('succmsg'));
         $msg = trim($request->input('msg'));
@@ -344,7 +345,7 @@ class LoNumController extends Controller
         } elseif($go == 1 && trim($course_no_selected) != '' && strlen($course_no_selected) > 3 && $id > 0 && trim($version_requested) != '' && $act > 0) {
             if($act == 1) { //save and continue
                 $loNumModel->updateLmsCourseCreationStep($id, 4, $owner_id, $request->session()->get('username'));
-                $response = redirect()->route('step5',['msg'=>'New Version Created', 'method'=>'V']);
+                $response = redirect()->route('step5',['id'=>$id, 'msg'=>'New Version Created', 'method'=>'V']);
                 $response->send();
                 exit;
             } elseif($act == 2) { //release and start over
@@ -366,7 +367,7 @@ class LoNumController extends Controller
     } //end step2v
 
     public function step5(Request $request) {
-        $owner_id = $this->userId = LoginCheck::isLoggedIn($request);
+        $owner_id = $this->userId = LoginCheck::isLoggedInHasPermissions($request,['lonumadminedit']);
         $msg = trim($request->input('msg'));
         $error = $request->input('error');
         $succmsg = $request->input('succmsg');
@@ -399,7 +400,12 @@ class LoNumController extends Controller
             $delv_type = $request->input('delv_type');
             $catdiv_id = $request->input('catdiv_id');
             $course_no = $request->input('course_no');
-            $course_title = $course_no . ': ' . trim(preg_replace('/' . $course_no . '\s*:\s*' . '/i', '', trim($request->input('course_title')), 1));
+            $course_no_raw = $request->input('course_no_raw');
+            $course_title = trim(preg_replace('/' . $course_no . '\s*:\s*' . '/i', '', trim($request->input('course_title')), 1));
+            $course_title = trim(preg_replace('/\s*\|\s*' . $course_no . '/i','',$course_title,1));
+            $course_title = trim(preg_replace('/' . $course_no_raw . '\s*:\s*' . '/i','',$course_title,1));
+            $course_title = trim(preg_replace('/\s*\|\s*' . $course_no_raw . '/i','',$course_title,1));
+            $course_title .=  '| ' . $course_no;
             $product_relnum = $request->input('product_relnum');
             $course_duration = $request->input('course_duration');
             $course_level = $request->input('course_level','N');
@@ -417,12 +423,13 @@ class LoNumController extends Controller
                 'updated_by' => $request->session()->get('username'));
             $act = 'E';
             $loNumModel->saveLmsCourseData($id, $update_data);
+            $cdata = $loNumModel->getLmsCourseGenDataById($id);
             $complete = true;
         } //end if
 
+        $disable_all = ($act != 'E' || $complete == true) ? "disabled='disabled'" : '';
 
-
-        return view('lonum.step5', array_merge(compact('msg', 'id', 'method', 'act', 'go', 'error', 'succmsg', 'catdivs', 'complete'),$cdata));
+        return view('lonum.step5', array_merge(compact('msg', 'id', 'method', 'act', 'go', 'error', 'succmsg', 'catdivs', 'complete', 'disable_all'),$cdata));
 
     } //end step5
 

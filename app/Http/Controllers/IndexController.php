@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 use App\LoginCheck;
 use App\LoNumber;
 
@@ -13,13 +14,15 @@ class IndexController extends Controller
     public function index(Request $request) {
         $this->userId = LoginCheck::isLoggedIn($request);
         $msg = $request->input('msg');
-        return view('index.index', compact('msg'));
+        $bburl = trim($request->input('bburl'));
+        return view('index.index', compact('msg', 'bburl'));
     } //end index function
 
     public function maincontent(Request $request) {
         $this->userId = LoginCheck::isLoggedIn($request);
         $msg = $request->input('msg');
-        return view('index.maincontent', compact('msg'));
+        $bburl = trim($request->input('bburl'));
+        return view('index.maincontent', compact('msg', 'bburl'));
     } //end maincontent function
 
     public function menu(Request $request) {
@@ -35,7 +38,7 @@ class IndexController extends Controller
         $loId = $request->input('loId');
         $loAction = trim($request->input('loAction'));
 
-        if($loAction == 'R' && $loId > 0) {
+        if($loAction == 'R' && $loId > 0 && in_array('lonumadminedit',$request->session()->get('userpermissions'))) {
             $loModel = new LoNumber();
             $loModel->unLockLmsLoNumber($loId);
             $msg = "LO/Course Number Successfully Released!";

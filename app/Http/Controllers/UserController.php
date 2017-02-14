@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 use App\User;
 use App\Tool;
 use App\LoginCheck;
@@ -12,7 +13,7 @@ class UserController extends Controller
     protected $userId = null;
 
     public function index (Request $request) {
-        $this->userId = LoginCheck::isLoggedIn($request);
+        $this->userId = LoginCheck::isLoggedInHasPermissions($request,['useradmin']);
         $srchName = trim($request->input('srchName'));
         $srchCsl = trim($request->input('srchCsl'));
         $srchImprt = $request->input('srchImprt',0);

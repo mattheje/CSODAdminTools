@@ -13,7 +13,7 @@
 <div id="demoExampleSplitterVertical" class="n-splitter">
     <iframe class="demo-example-menu-box" id="menu"></iframe>
     <iframe class="demo-example-content-box" name="content" id="content" style="min-width: 250px;"
-            src="{{ URL::action('IndexController@dashboard', ['msg'=>$msg]) }}"></iframe>
+            src="@if(trim($bburl != '')){{ $bburl }}@else{{ URL::action('IndexController@dashboard', ['msg'=>$msg]) }}@endif"></iframe>
 </div>
 <script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/jquery.min.js"></script>
 <script type="text/javascript" src="{{ URL::to('/') }}/wulfdist/js/dependencies/jqxcore.js"></script>

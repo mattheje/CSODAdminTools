@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 use App\User;
 
 class LoginController extends Controller
@@ -10,7 +11,9 @@ class LoginController extends Controller
     public function index(Request $request) {
         $request->session()->regenerate(true);
         $defaultUsername = isset($_COOKIE['lng_username']) ? trim($_COOKIE['lng_username']) : null;
-        return view('login.index', compact('defaultUsername'));
+        $msg = trim($request->input('msg'));
+        $bburl = trim($request->input('bburl'));
+        return view('login.index', compact('defaultUsername','msg','bburl'));
     } //end index function
 
 
@@ -20,6 +23,7 @@ class LoginController extends Controller
         $userModel = new User(); //model
         $username = strtolower(trim($request->input('username')));
         $password = trim($request->input('password'));
+        $bburl = trim($request->input('bburl'));
 
         $userId = $userModel->authenticate($username, $password);
         if ($userId > 0) { //successful login
@@ -37,7 +41,7 @@ class LoginController extends Controller
             $request->session()->put('fullname', $userData->fname . ' '. $userData->lname);
             $request->session()->put('useremail', $userData->email);
             $request->session()->put('userpermissions', $permissions);
-            $response = redirect()->route('index', ['msg' => 'Welcome ' . $userData->fname . '!'])
+            $response = redirect()->route('index', ['msg' => 'Welcome ' . $userData->fname . '!', 'bburl' => $bburl])
                                   ->withCookie(cookie('lng_username', $username, 1051200)); //2 Years (in minutes)
             $request->session()->save();
             $response->send();

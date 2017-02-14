@@ -118,7 +118,7 @@
 </nav>
 
 <div class="demo-main-content" style="width: 100%; padding-top: 1px; padding-bottom: 1px;">
-    <iframe name="main-content" id="main_content" src="{{ URL::action('IndexController@maincontent', ['msg'=>$msg]) }}"></iframe>
+    <iframe name="main-content" id="main_content" src="{{ URL::action('IndexController@maincontent', ['msg'=>$msg, 'bburl'=>$bburl]) }}"></iframe>
 </div>
 
 <div class="n-footer-bordered" style="height: 30px; line-height: 30px;">

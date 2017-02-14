@@ -335,6 +335,7 @@ ENDSQLTEXT;
                     ->join('lng_users AS u', 'up.user_id', '=', 'u.id')
                     ->join('lng_tools AS t', 'up.tool_id', '=', 't.id')
                     ->select('t.shortname')
+                    ->where('u.id',$userId)
                     ->where('up.status',1)
                     ->where('u.status',1)
                     ->where('t.status',1)

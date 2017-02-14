@@ -15,7 +15,8 @@ Route::any('/', ['as' => 'index', 'uses' => 'IndexController@index']);
 Route::any('index/maincontent', ['as' => 'maincontent', 'uses' => 'IndexController@maincontent']);
 Route::any('index/menu', ['as' => 'menu', 'uses' => 'IndexController@menu']);
 Route::any('construction', ['as' => 'construction', 'uses' => 'IndexController@construction']);
-Route::any('index/dashboard/{type?}', ['as' => 'dashboard', 'uses' => 'IndexController@dashboard']);
+Route::any('index/dashboard', ['as' => 'dashboard', 'uses' => 'IndexController@dashboard']);
+Route::any('index/dashboard/{type?}', ['as' => 'dashboardtype', 'uses' => 'IndexController@dashboard']);
 
 Route::any('login', ['as' => 'login', 'uses' => 'LoginController@index']);
 Route::any('login/login', ['as' => 'loginlogin', 'uses' => 'LoginController@login']);
